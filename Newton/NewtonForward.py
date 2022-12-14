@@ -40,17 +40,3 @@ def mainEqui(dataX: list, dataY: list):
         polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[i,i] / facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
     return polyTable, poly
-
-x = 1.5
-
-polyTable,poly = mainEqui([1,2,3,4,5,6],[1.1,1.2,1.4,1.8,2.6,4.2])
-print("===================")
-print(poly)
-for i in range(0,len(polyTable)):
-    print(CalcPolyReversedInput(polyTable[i], 1.5))
-print("===================")
-value = CalcPolyReversedInput(poly,0.5)
-print(value)
-p = list(poly)
-p.reverse()
-print(p)

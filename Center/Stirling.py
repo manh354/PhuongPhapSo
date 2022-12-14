@@ -55,13 +55,3 @@ def main(dataX, dataY):
             polyTable[i] = MulPolyWithCoef(polyTable[i], (diffTable[currentPos,i] + diffTable[currentPos-1,i])/ (2*facTable[i]))
     poly = ConvertPolyTableToPoly(polyTable)
     return polyTable, poly
-
-polyTable,poly = main([1,2,3,4,5,6,7],[1.1,1.2,1.4,1.8,2.6,4.2,7.4])
-print("===================")
-print(poly)
-print("===================")
-value = CalcPolyReversedInput(poly,0.5)
-print(value)
-p = list(poly)
-p.reverse()
-print(p)

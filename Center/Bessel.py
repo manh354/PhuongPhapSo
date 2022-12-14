@@ -96,14 +96,3 @@ def mainBesselSkewed(dataX, dataY):
             polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[currentPos,i]/ facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
     return polyTable, poly
-    print
-
-polyTable,poly = mainBesselSkewed([1,2,3,4,5,6],[1.1,1.2,1.4,1.8,2.6,4.2])
-print("===================")
-print(poly)
-print("===================")
-value = CalcPolyReversedInput(poly,0)
-print(value)
-p = list(poly)
-p.reverse()
-print(p)

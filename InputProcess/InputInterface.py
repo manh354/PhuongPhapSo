@@ -1,16 +1,27 @@
 import pandas as pd
 import numpy as np
 
-def NhapDuLieuTho(inputPath):
+def NhapDuLieuTho(inputPath, tenDuLieuX, tenDuLieuY):
     if inputPath.endswith(".xlsx"):
         print("File du lieu la file .xlsx (excel).")
         data = pd.read_excel(inputPath)
     if inputPath.endswith(".csv"):
         print("File du lieu la file .csv (comma values)")
         data = pd.read_csv(inputPath)
-    dataX = data['x']
-    dataY = data['y']
+    print(data)
+    dataX = data[tenDuLieuX]
+    dataY = data[tenDuLieuY]
     return dataX, dataY
+
+def NhapDuLieuThoDon(inputPath, tenDuLieu):
+    if inputPath.endswith(".xlsx"):
+        print("File du lieu la file .xlsx (excel).")
+        data = pd.read_excel(inputPath)
+    if inputPath.endswith(".csv"):
+        print("File du lieu la file .csv (comma values)")
+        data = pd.read_csv(inputPath)
+    dataX = data[tenDuLieu]
+    return dataX
 
 def SapXepDuLieuTangDan(dataX: list, dataY: list):
     for i in range(len(dataX)):
@@ -30,8 +41,8 @@ def KiemTraDuLieuTrungLap(dataX: list):
                 return True
     return False
 
-def main(inputPath: str):
-    dataX, dataY = NhapDuLieuTho(inputPath)
+def main(inputListOfPointsPath: str,dataXname,dataYname):
+    dataX, dataY = NhapDuLieuTho(inputListOfPointsPath,dataXname,dataYname)
     dataX, dataY = SapXepDuLieuTangDan(dataX,dataY)
     repeat = KiemTraDuLieuTrungLap(dataX)
-    return dataX, dataY, repeat
+    return dataX, dataY,repeat

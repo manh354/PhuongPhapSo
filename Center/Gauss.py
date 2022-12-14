@@ -50,7 +50,7 @@ def mainGauss2(dataX, dataY):
     polyTable.append([1])
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
-    middle = int(len(dataX)/2) #khai bao vi tri giua
+    middle = int(len(dataX)/2) #khai bao vi tri giua tuc la x0
     print(diffTable)
     for i in range(1,length):
         offset:int #khai bao so chi p(p-1)(p+1)..(p + offset)
@@ -64,13 +64,3 @@ def mainGauss2(dataX, dataY):
     poly = ConvertPolyTableToPoly(polyTable)
     return polyTable, poly
 
-
-polyTable,poly = mainGauss2([1,2,3,4,5,6,7],[1.1,1.2,1.4,1.8,2.6,4.2,7.4])
-print("===================")
-print(poly)
-print("===================")
-value = CalcPolyReversedInput(poly,0.5)
-print(value)
-p = list(poly)
-p.reverse()
-print(p)

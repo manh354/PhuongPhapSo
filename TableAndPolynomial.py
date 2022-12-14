@@ -87,7 +87,7 @@ def CalcPolyReversedInput(polynomial, x):
     newPoly = np.zeros(len(polynomial))
     newPoly[0] = revPolynomial[0]
     for i in range(1, len(polynomial)):
-        newPoly[i] = newPoly[i - 1] * x + revPolynomial[i]
+        newPoly[i] = newPoly[i - 1] *x + revPolynomial[i]
     return newPoly[-1]
 
 def MulTwoPoly(polyA, polyB):

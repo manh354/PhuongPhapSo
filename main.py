@@ -1,5 +1,6 @@
 from InputProcess.InputInterface import main as InputMain
 from ValuesConvert import*
+from FindX0Mode import*
 
 from Langrange.Langrange import main as LangrangeMain
 from Newton.NewtonForward import mainAny as NewtonForwardAnyMain
@@ -15,6 +16,8 @@ from ReverseInterpolation.ReverseLangrange import mainReverseLangrange as Revers
 from ReverseInterpolation.ReverseNewton import mainNewtonForward as ReverseNewtonForwardMain
 from ReverseInterpolation.ReverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
 
+from TableAndPolynomial import CalcPolyReversedInput
+
 from enum import Enum
 
 def menuNoisuy():
@@ -26,15 +29,14 @@ def menuNoisuy():
     print("5: Stirling")
     mode = input()
     if(mode == "1"):
-        return LangrangeMain, NotConvert
+        return LangrangeMain, NotConvert, NoMark
     elif(mode == "2"):
-        return menuNewton
+        return menuNewton()
     elif(mode == "3"):
-        return menuGauss
+        return menuGauss()
     elif(mode == "4"):
-        return menuBessel
-    elif(mode == "5"):
-        return StirlingMain, ConvertXtoT
+        return menuBessel()
+    return StirlingMain, ConvertXtoT, MarkAtCenter
 
 
 def menuGauss():
@@ -43,9 +45,8 @@ def menuGauss():
     print("2: Gauss 2 (chon ben trai truoc ben phai sau)")
     mode = input()
     if(mode == "1"):
-        return Gauss1Main, ConvertXtoT
-    elif (mode == "2"):
-        return Gauss2Main, ConvertXtoT
+        return Gauss1Main, ConvertXtoT, MarkAtCenter
+    return Gauss2Main, ConvertXtoT, MarkAtCenter
 
 def menuBessel():
     print("Chon loai phuong phap Bessel ban muon su dung:")
@@ -53,9 +54,8 @@ def menuBessel():
     print("2: Bessel theo u")
     mode = input()
     if(mode == "1"):
-        return BesselNormMain, ConvertXtoT
-    elif (mode == "2"):
-        return BesselSkewedMain, ConvertXtoU
+        return BesselNormMain, ConvertXtoT, MarkAtCenter
+    return BesselSkewedMain, ConvertXtoU, MarkAtCenter
 
 def menuNewton():
     print("Chon loai phuong phap newton ban muon su dung:")
@@ -65,13 +65,12 @@ def menuNewton():
     print("4: Newton lui voi moc CACH DEU")
     mode = input()
     if(mode == "1"):
-        return NewtonForwardAnyMain, NotConvert
+        return NewtonForwardAnyMain, NotConvert, NoMark
     elif(mode == "2"):
-        return NewtonForwardEquiMain, ConvertXtoT
+        return NewtonForwardEquiMain, ConvertXtoT, MarkAtStart
     elif(mode == "3"):
-        return NewtonBackwardAnyMain, NotConvert
-    elif(mode == "4"):
-        return NewtonBackwardEquiMain, ConvertXtoT
+        return NewtonBackwardAnyMain, NotConvert, NoMark
+    return NewtonBackwardEquiMain, ConvertXtoT, MarkAtEnd
 
 def menuNoisuyNguoc():
     print("Chon PHUONG PHAP ban muon su dung")
@@ -83,18 +82,19 @@ def menuNoisuyNguoc():
         return ReverseLangrangeMain
     elif (mode == "2"):
         return ReverseNewtonForwardMain
-    elif (mode == "3"):
-        return ReverseNewtonBackwardMain
+    return ReverseNewtonBackwardMain
 
 #################################################################################
 listOfPointsPath = "inputData.csv"
 interpolatePoint = "inputPoint.csv"
 ### kiểm tra đầu vào
-dataX, dataY, X0, CoBiTrungLapKhong = InputMain(listOfPointsPath,interpolatePoint)
+dataX, dataY, CoBiTrungLapKhong = InputMain(listOfPointsPath,'x','y')
 if(CoBiTrungLapKhong):
     print("Du lieu bi TRUNG LAP... chua xu ly dc")
     exit()
 print("Du lieu hop ly, Tiep tuc xu ly")
+
+print("Ban muon chon du lieu trong khoang nao?")
 
 print("Chon BAI TOAN ban muon giai")
 print("1: Noi Suy")
@@ -104,7 +104,11 @@ print("4: Tinh tich phan\n")
 
 char1 = input()
 if char1 == "1":
-    noiSuy, conversion = menuNoisuy()
+    print("Chon diem ban muon tinh noi suy:")
+    value = input()
+    noiSuy, conversion, mark = menuNoisuy()
+    polyTable,poly = noiSuy(dataX, dataY)
+    CalcPolyReversedInput(poly,value)
+
 elif char1 == "2":
     noiSuyNguoc = menuNoisuyNguoc()
-

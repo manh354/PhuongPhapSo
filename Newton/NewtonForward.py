@@ -4,7 +4,7 @@ sys.path.append('../PhuongPhapSo')
 from TableAndPolynomial import *
 from ValuesConvert import *
 
-def mainAny(dataX: list, dataY: list):
+def mainAny(dataX, dataY):
     """
     Newton tiến với mốc bất kì (giữ nguyên biến x)
     """
@@ -23,7 +23,7 @@ def mainAny(dataX: list, dataY: list):
 
 
 
-def mainEqui(dataX: list, dataY: list):
+def mainEqui(dataX, dataY):
     """
     Newton tiến với mốc cách đều (đổi biến sang t)
     """

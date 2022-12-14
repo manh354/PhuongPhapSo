@@ -4,7 +4,7 @@ sys.path.append('../PhuongPhapSo')
 from TableAndPolynomial import *
 from ValuesConvert import *
 
-def mainAny(dataX: list, dataY: list):
+def mainAny(dataX, dataY):
     """
     Newton lùi với mốc bất kì (giữ nguyên biến x)
     """
@@ -23,7 +23,7 @@ def mainAny(dataX: list, dataY: list):
 
 
 
-def mainEqui(dataX: list, dataY: list):
+def mainEqui(dataX, dataY):
     """
     Newton lùi với mốc cách đều (đổi biến sang t)
     """
@@ -40,3 +40,5 @@ def mainEqui(dataX: list, dataY: list):
         polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[-1,i] / facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
     return polyTable, poly
+
+

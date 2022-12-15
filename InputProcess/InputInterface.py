@@ -34,6 +34,13 @@ def SapXepDuLieuTangDan(dataX: list, dataY: list):
             dataY[indexMin], dataY[i] = dataY[i], dataY[indexMin]
     return dataX,dataY
 
+def KiemTraDuLieuCachDeu(dataX):
+    h = dataX[1]-dataX[0]
+    for i in range(1,len(dataX)):
+        if (dataX[i] - dataX[i-1]) != h :
+            return False
+    return True
+
 def KiemTraDuLieuTrungLap(dataX: list):
     for i in range(0,len(dataX)-1):
         for j in range(i+1, len(dataX)-1):
@@ -45,4 +52,5 @@ def main(inputListOfPointsPath: str,dataXname,dataYname):
     dataX, dataY = NhapDuLieuTho(inputListOfPointsPath,dataXname,dataYname)
     dataX, dataY = SapXepDuLieuTangDan(dataX,dataY)
     repeat = KiemTraDuLieuTrungLap(dataX)
-    return dataX, dataY,repeat
+    equi = KiemTraDuLieuCachDeu(dataX)
+    return dataX, dataY,repeat, equi

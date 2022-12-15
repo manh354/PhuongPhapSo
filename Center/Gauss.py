@@ -20,7 +20,7 @@ def mainGauss1(dataX, dataY):
     polyTable.append([1])
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
-    middle = int(len(dataX)/2) #khai bao vi tri giua
+    middle = int((len(dataX)-1)/2) #khai bao vi tri giua
     print(diffTable)
     for i in range(1,length):
         offset:int #khai bao so chi p(p-1)(p+1)..(p+ offset)

@@ -18,7 +18,9 @@ from ReverseInterpolation.ReverseNewton import mainNewtonBackward as ReverseNewt
 
 from TableAndPolynomial import CalcPolyReversedInput
 
-from enum import Enum
+import numpy as np
+np.set_printoptions(edgeitems=30, linewidth=100, 
+    formatter=dict(float=lambda x: "%.3g" % x))
 
 def menuNoisuy():
     print("Chon PHUONG PHAP ban muon su dung")
@@ -36,7 +38,7 @@ def menuNoisuy():
         return menuGauss()
     elif(mode == "4"):
         return menuBessel()
-    return StirlingMain, ConvertXtoT, MarkAtCenter
+    return StirlingMain, ConvertXtoT, MarkAtCenterLeft
 
 
 def menuGauss():
@@ -45,8 +47,8 @@ def menuGauss():
     print("2: Gauss 2 (chon ben trai truoc ben phai sau)")
     mode = input()
     if(mode == "1"):
-        return Gauss1Main, ConvertXtoT, MarkAtCenter
-    return Gauss2Main, ConvertXtoT, MarkAtCenter
+        return Gauss1Main, ConvertXtoT, MarkAtCenterLeft
+    return Gauss2Main, ConvertXtoT, MarkAtCenterRight
 
 def menuBessel():
     print("Chon loai phuong phap Bessel ban muon su dung:")
@@ -54,8 +56,8 @@ def menuBessel():
     print("2: Bessel theo u")
     mode = input()
     if(mode == "1"):
-        return BesselNormMain, ConvertXtoT, MarkAtCenter
-    return BesselSkewedMain, ConvertXtoU, MarkAtCenter
+        return BesselNormMain, ConvertXtoT, MarkAtCenterLeft
+    return BesselSkewedMain, ConvertXtoU, MarkAtCenterLeft
 
 def menuNewton():
     print("Chon loai phuong phap newton ban muon su dung:")
@@ -88,11 +90,16 @@ def menuNoisuyNguoc():
 listOfPointsPath = "inputData.csv"
 interpolatePoint = "inputPoint.csv"
 ### kiểm tra đầu vào
-dataX, dataY, CoBiTrungLapKhong = InputMain(listOfPointsPath,'x','y')
+dataX, dataY, CoBiTrungLapKhong, CoCachDeuNhauKhong = InputMain(listOfPointsPath,'x','y')
 if(CoBiTrungLapKhong):
     print("Du lieu bi TRUNG LAP... chua xu ly dc")
     exit()
 print("Du lieu hop ly, Tiep tuc xu ly")
+if(CoCachDeuNhauKhong):
+    print("Du lieu CACH DEU nhau")
+    h = dataX[1] - dataX[0]
+else:
+    print("Du lieu KHONG cach deu nhau")
 
 print("Ban muon chon du lieu trong khoang nao?")
 
@@ -104,11 +111,13 @@ print("4: Tinh tich phan\n")
 
 char1 = input()
 if char1 == "1":
-    print("Chon diem ban muon tinh noi suy:")
-    value = input()
     noiSuy, conversion, mark = menuNoisuy()
+    print("Chon diem ban muon tinh noi suy:")
+    value = float(input())
     polyTable,poly = noiSuy(dataX, dataY)
-    CalcPolyReversedInput(poly,value)
+    print("Điểm neo t là {0}".format(mark(dataX)))
+    ketquaNoiSuy = CalcPolyReversedInput(poly,conversion(value, mark(dataX), h))
+    print(ketquaNoiSuy)
 
 elif char1 == "2":
     noiSuyNguoc = menuNoisuyNguoc()

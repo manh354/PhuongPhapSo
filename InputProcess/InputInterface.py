@@ -9,8 +9,8 @@ def NhapDuLieuTho(inputPath, tenDuLieuX, tenDuLieuY):
         print("File du lieu la file .csv (comma values)")
         data = pd.read_csv(inputPath)
     print(data)
-    dataX = data[tenDuLieuX]
-    dataY = data[tenDuLieuY]
+    dataX = list(data[tenDuLieuX])
+    dataY = list(data[tenDuLieuY])
     return dataX, dataY
 
 def NhapDuLieuThoDon(inputPath, tenDuLieu):
@@ -20,7 +20,7 @@ def NhapDuLieuThoDon(inputPath, tenDuLieu):
     if inputPath.endswith(".csv"):
         print("File du lieu la file .csv (comma values)")
         data = pd.read_csv(inputPath)
-    dataX = data[tenDuLieu]
+    dataX = list(data[tenDuLieu])
     return dataX
 
 def SapXepDuLieuTangDan(dataX: list, dataY: list):

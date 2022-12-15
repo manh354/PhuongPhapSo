@@ -169,3 +169,18 @@ def ConvertPolyTableToPoly(table : list):
         for j in range(len(table[i])):
             poly[j] += table[i][j]
     return poly
+
+def ConvertPolyTableToAllPolys(table: list):
+    """
+    Từ bảng các đa thức, cộng tất cả các đa thức lại với nhau tạo thành tất cả đa thức nội suy hoàn chỉnh theo từng bước
+    ---
+    ...
+    """
+    polies = []
+    for k in range(len(table)):
+        poly = np.zeros(len(table))
+        for i in range(k):
+            for j in range(len(table[i])):
+                poly[j] += table[i][j]
+        polies.append(poly)
+    return polies

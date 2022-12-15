@@ -1,4 +1,5 @@
 from InputProcess.InputInterface import main as InputMain
+from InputProcess.SliceData import SliceFromTo, AutoSlice, AutoFindSlice, SliceByHand
 from ValuesConvert import*
 from FindX0Mode import*
 
@@ -89,6 +90,7 @@ def menuNoisuyNguoc():
 #################################################################################
 listOfPointsPath = "inputData.csv"
 interpolatePoint = "inputPoint.csv"
+sliceMode = "tay"
 ### kiểm tra đầu vào
 dataX, dataY, CoBiTrungLapKhong, CoCachDeuNhauKhong = InputMain(listOfPointsPath,'x','y')
 if(CoBiTrungLapKhong):
@@ -112,12 +114,20 @@ print("4: Tinh tich phan\n")
 char1 = input()
 if char1 == "1":
     noiSuy, conversion, mark = menuNoisuy()
+    ## Chọn điểm tính mốc
     print("Chon diem ban muon tinh noi suy:")
     value = float(input())
-    polyTable,poly = noiSuy(dataX, dataY)
-    print("Điểm neo t là {0}".format(mark(dataX)))
-    ketquaNoiSuy = CalcPolyReversedInput(poly,conversion(value, mark(dataX), h))
-    print(ketquaNoiSuy)
-
+    ## Chọn số mốc nội suy
+    print("Chọn mốc nội suy ngoài cùng bên trái:")
+    left = int(input())
+    print("Chọn mốc nội suy ngoài cùng bên phải:")
+    right = int(input())
+    ## Xử lý mốc nội suy
+    ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
+    ## Xử lý nội suy
+    polyTable,poly = noiSuy(ndataX, ndataY)
+    print("Điểm neo t là {0}".format(mark(ndataX)))
+    ketquaNoiSuy = CalcPolyReversedInput(poly,conversion(value, mark(ndataX), h))
+    print("Kết quả tính toán nội suy tại x = {0}, tương đương t = {1} là: {2}".format(value,conversion(value, mark(ndataX), h), ketquaNoiSuy))
 elif char1 == "2":
     noiSuyNguoc = menuNoisuyNguoc()

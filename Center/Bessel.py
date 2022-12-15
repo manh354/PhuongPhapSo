@@ -26,7 +26,7 @@ def mainBesselNorm(dataX, dataY):
     length = len(dataX)
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
-    middle = int(len(dataX)/2) #khai bao vị trí giữa
+    middle = int((len(dataX)-1)/2) #khai bao vị trí giữa
     print(diffTable)
     polyTable = []
     polyTable.append([1])
@@ -67,7 +67,7 @@ def mainBesselSkewed(dataX, dataY):
     length = len(dataX)
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
-    middle = int(len(dataX)/2) #khai bao vị trí giữa
+    middle = int((len(dataX)-1)/2) #khai bao vị trí giữa
     print(diffTable)
     polyTable = []
     polyTable.append([1])

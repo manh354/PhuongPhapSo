@@ -20,8 +20,6 @@ from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonBackward 
 from Interpolation.TableAndPolynomial import CalcPolyReversedInput
 
 import numpy as np
-np.set_printoptions(edgeitems=30, linewidth=100, 
-    formatter=dict(float=lambda x: "%.3g" % x))
 
 def menuNoisuy():
     print("Chon PHUONG PHAP ban muon su dung")

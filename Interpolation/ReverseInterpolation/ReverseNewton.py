@@ -4,8 +4,8 @@ sys.path.append('../PhuongPhapSo')
 import math
 
 from Interpolation.TableAndPolynomial import *
-from Newton.NewtonBackward import mainEqui as NewtonBackwardMain
-from Newton.NewtonForward import mainEqui as NewtonForwardMain
+from Interpolation.Newton.NewtonBackward import mainEqui as NewtonBackwardMain
+from Interpolation.Newton.NewtonForward import mainEqui as NewtonForwardMain
 
 def mainNewtonForward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
     """

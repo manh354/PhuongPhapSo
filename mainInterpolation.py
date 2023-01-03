@@ -19,7 +19,6 @@ from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonBackward 
 
 from Interpolation.TableAndPolynomial import CalcPolyReversedInput
 
-import numpy as np
 
 def menuNoisuy():
     print("Chon PHUONG PHAP ban muon su dung")

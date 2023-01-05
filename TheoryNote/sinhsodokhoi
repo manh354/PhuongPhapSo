@@ -1,0 +1,18 @@
+tải http://flowchart.js.org/ để sinh flowchart
+
+cài đặt: 
+
+pip install pyflowchart
+
+cd đến file muốn generate code
+
+sinh flowchart từ test.py
+
+python -m pyflowchart test.py
+
+sinh flowchart từ hàm (or class)
+
+python -m pyflowchart test.py -f function_name
+
+python -m pyflowchart test.py -f ClassName.method_name
+

@@ -13,6 +13,7 @@ from Interpolation.Center.Bessel import mainSkewed as BesselSkewedMain
 from Interpolation.Center.Stirling import main as StirlingMain
 from Interpolation.Center.Gauss import mainGauss1 as Gauss1Main
 from Interpolation.Center.Gauss import mainGauss2 as Gauss2Main
+
 from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangrange as ReverseLangrangeMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
@@ -21,7 +22,7 @@ from Interpolation.TableAndPolynomial import CalcPolyReversedInput
 
 
 def menuNoisuy():
-    print("Chon PHUONG PHAP ban muon su dung")
+    print("Chọn PHƯƠNG PHÁP NỘI SUY bạn muốn sử dụng")
     print("1: Langrange")
     print("2: Newton")
     print("3: Gauss")
@@ -40,16 +41,16 @@ def menuNoisuy():
 
 
 def menuGauss():
-    print("Chon loai phuong phap gauss ban muon su dung:")
-    print("1: Gauss 1 (chon ben phai truoc ben trai sau)")
-    print("2: Gauss 2 (chon ben trai truoc ben phai sau)")
+    print("Chọn loại phương pháp Gauss bạn muốn sử dụng:")
+    print("1: Gauss 1 (Chọn bên phải trước, bên trái sau)")
+    print("2: Gauss 2 (Chọn bên trái trước, bên phải sau)")
     mode = input()
     if(mode == "1"):
         return Gauss1Main, ConvertXtoT, MarkAtCenterLeft
     return Gauss2Main, ConvertXtoT, MarkAtCenterRight
 
 def menuBessel():
-    print("Chon loai phuong phap Bessel ban muon su dung:")
+    print("Chọn loại phương pháp NỘI SUY BESSEL bạn muốn sử dụng:")
     print("1: Bessel theo t")
     print("2: Bessel theo u")
     mode = input()
@@ -58,11 +59,11 @@ def menuBessel():
     return BesselSkewedMain, ConvertXtoU, MarkAtCenter
 
 def menuNewton():
-    print("Chon loai phuong phap newton ban muon su dung:")
-    print("1: Newton TIEN voi moc bat ki")
-    print("2: Newton TIEN voi moc CACH DEU")
-    print("3: Newton lui voi moc bat ki")
-    print("4: Newton lui voi moc CACH DEU")
+    print("Chọn loại phương pháp NỘI SUY NEWTON bạn muốn sử dụng:")
+    print("1: Newton tiến với mốc BẤT KÌ")
+    print("2: Newton tiến với mốc CÁCH ĐỀU")
+    print("3: Newton lùi với mốc BẤT KÌ")
+    print("4: Newton lùi với mốc CÁC ĐỀU")
     mode = input()
     if(mode == "1"):
         return NewtonForwardAnyMain, NotConvert, NoMark
@@ -73,10 +74,10 @@ def menuNewton():
     return NewtonBackwardEquiMain, ConvertXtoT, MarkAtEnd
 
 def menuNoisuyNguoc():
-    print("Chon PHUONG PHAP ban muon su dung")
-    print("1: Langrange Nguoc")
-    print("2: Lap newton xuoi")
-    print("3: Lap newton nguoc")
+    print("Chọn phương pháp NỘI SUY NGƯỢC bạn muốn sử dụng:")
+    print("1: Langrange ngược")
+    print("2: Lặp Newton xuôi")
+    print("3: Lặp Newton ngược")
     mode = input()
     if(mode == "1"):
         return ReverseLangrangeMain
@@ -84,7 +85,7 @@ def menuNoisuyNguoc():
         return ReverseNewtonForwardMain
     return ReverseNewtonBackwardMain
 
-#################################################################################
+############################### Main program ##################################
 def main():
     listOfPointsPath = "inputData.csv"
     interpolatePoint = "inputPoint.csv"
@@ -92,28 +93,29 @@ def main():
     ### kiểm tra đầu vào
     dataX, dataY, CoBiTrungLapKhong, CoCachDeuNhauKhong = InputMain(listOfPointsPath,'x','y')
     if(CoBiTrungLapKhong):
-        print("Du lieu bi TRUNG LAP... chua xu ly dc")
+        print("Dữ liệu bị TRÙNG LẶP... chưa xử lý được!")
         exit()
-    print("Du lieu hop ly, Tiep tuc xu ly")
+    print("Dữ liệu hợp lý, tiếp tục xử lý.")
     h = dataX[1] - dataX[0]
     if(CoCachDeuNhauKhong):
-        print("Du lieu CACH DEU nhau")
+        print("Dữ liệu CÁCH ĐỀU nhau")
     else:
-        print("Du lieu KHONG cach deu nhau")
+        print("Dữ liệu KHÔNG CÁCH ĐỀU nhau")
 
-    print("Ban muon chon du lieu trong khoang nao?")
+    print("Bạn muốn chọn dữ liệu trong khoảng nào?")
 
-    print("Chon BAI TOAN ban muon giai")
-    print("1: Noi Suy")
-    print("2: Noi Suy Nguoc")
-    print("3: Tinh dao ham")
-    print("4: Tinh tich phan\n")
+    print("Chọn BÀI TOÁN bạn muốn giải")
+    print("1: Nội suy")
+    print("2: Nội suy ngược")
+    print("3: Tính đạo hàm")
+    print("4: Tính tích phân\n")
 
     char1 = input()
+
     if char1 == "1":
         noiSuy, conversion, mark = menuNoisuy()
         ## Chọn điểm tính mốc
-        print("Chon diem ban muon tinh noi suy:")
+        print("Chọn điểm bạn muốn tính nội suy:")
         value = float(input())
         ## Chọn số mốc nội suy
         print("Chọn mốc nội suy ngoài cùng bên trái:")
@@ -127,8 +129,10 @@ def main():
         print("Điểm neo t là {0}".format(mark(ndataX)))
         ketquaNoiSuy = CalcPolyReversedInput(poly,conversion(value, mark(ndataX), h))
         print("Kết quả tính toán nội suy tại x = {0}, tương đương t = {1} là: {2}".format(value,conversion(value, mark(ndataX), h), ketquaNoiSuy))
+
     elif char1 == "2":
         noiSuyNguoc = menuNoisuyNguoc()
+
         if noiSuyNguoc == ReverseLangrangeMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
             value = float(input())
@@ -140,6 +144,7 @@ def main():
             polyTable,poly = noiSuyNguoc(ndataX, ndataY)
             ketquaNoiSuy = CalcPolyReversedInput(poly, value)
             print("Kết quả tính toán nội suy ngược tại y = {0} là: {1}".format(value,ketquaNoiSuy))
+
         if noiSuyNguoc == ReverseNewtonForwardMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
             value = float(input())

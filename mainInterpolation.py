@@ -16,7 +16,7 @@ from Interpolation.Center.Gauss import mainGauss2 as Gauss2Main
 from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangrange as ReverseLangrangeMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
-
+from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
 from Interpolation.TableAndPolynomial import CalcPolyReversedInput
 
 
@@ -143,6 +143,11 @@ def main():
         if noiSuyNguoc == ReverseNewtonForwardMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
             value = float(input())
+            dataX, dataY = FindUsableSegment(dataX,dataY, value)
+            print("Giá trị bạn muốn tính nội suy ngược là: {0}".format(value))
+            print("Tương ứng với mốc này, có đoạn đơn điệu sau:")
+            print("X: {0}".format(dataX))
+            print("Y: {0}".format(dataY))
             print("Chọn mốc nội suy ngoài cùng bên trái:")
             left = int(input())
             print("Chọn mốc nội suy ngoài cùng bên phải:")

@@ -13,6 +13,7 @@ def mainAny(dataX, dataY):
     polyTable.append([1])
     #print(polyTable[0])
     divTable = CreateDividedTable(dataX, dataY)
+    print("Bảng tỷ sai phân:")
     print(divTable)
     for i in range(1,length):
         polyTable.append(MulTwoPoly(polyTable[i-1],CreateRootPoly(dataX[i-1])))
@@ -33,6 +34,7 @@ def mainEqui(dataX, dataY):
     #print(polyTable[0])
     diffTable = CreateDifferenceTable(dataX, dataY)
     facTable = CreateFactorialTable(length)
+    print("Bảng sai phân:")
     print(diffTable)
     for i in range(1,length):
         polyTable.append(MulTwoPoly(polyTable[i-1],CreateRootPoly(i-1)))

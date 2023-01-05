@@ -1,35 +1,26 @@
 import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
+import time 
 
-variables = list(sp.symbols("x y z"))
-t = sp.symbols('t')
 
-deriv_equations = ["sin(x**t*z)*y*x*z","sin(t*x*y)","-cos(t^2*z)"]
-vars_start = [0.5,1,-1.2]
-t_start = 0
 
-h = 0.1
+def main(symbolic_function_system : list, symbolic_vars : list[sp.Symbol], symbolic_t : sp.Symbol , vars_start: list[float], t_start: float, t_end: float,h : float):
+    list_result_t = []
+    list_result_vars = []
+    lamdified_equation_system = [sp.lambdify([[*symbolic_vars],symbolic_t],func) for func in symbolic_function_system]
+    vars_iterate = vars_start.copy()
+    t_iterate = t_start
+    i = 0
+    while t_iterate <= t_end:
+        print(i)
+        i+= 1
+        equation_system_value = [equation((vars_iterate),t_iterate) for equation in lamdified_equation_system]
+        vars_iterate = np.add(vars_iterate, np.multiply(h,equation_system_value)) # var = var + h * d(var)/dt 
+        t_iterate = t_iterate + h
+        list_result_t.append(t_iterate)
+        list_result_vars.append(vars_iterate)
+    return list_result_t,list_result_vars
 
-simpifyEquation = [sp.sympify(x) for x in deriv_equations]
-t_iterate = t_start
-vars_iterate = vars_start
-
-list_t = [t_start]
-list_vars = [vars_iterate]
-
-for i in range(0,100):
-    print(i)
-    subtituteList = list(zip(variables,vars_iterate))+[(t,t_iterate)]
-    funcs_iterate = [x.subs(subtituteList) for x in simpifyEquation]
-    vars_iterate = np.add(vars_iterate, np.multiply(h, funcs_iterate))
-    t_iterate = t_iterate + h
-    list_t.append(t_iterate)
-    list_vars.append(vars_iterate)
-
-for i in range(0,len(variables)):
-    print(i)
-    plt.subplot(1,len(variables),i+1)
-    list_var_i = [x[i] for x in list_vars]
-    plt.plot(list_t,list_var_i)
-plt.show()
+def __main__legacy(symbolic_function_system : list, symbolic_vars : list[sp.Symbol], symbolic_t : sp.Symbol , vars_start: list[float], t_start: float, t_end: float,h : float):
+    pass

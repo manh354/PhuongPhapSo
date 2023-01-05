@@ -4,10 +4,10 @@ sys.path.append('../PhuongPhapSo')
 import math
 
 from Interpolation.TableAndPolynomial import *
-from Interpolation.Newton.NewtonBackward import mainEqui as NewtonBackwardMain
-from Interpolation.Newton.NewtonForward import mainEqui as NewtonForwardMain
+from Interpolation.Newton.NewtonBackward import mainEqui as mainNewtonBackward
+from Interpolation.Newton.NewtonForward import mainEqui as mainNewtonForward
 
-def mainNewtonForward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
+def mainNewtonForwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
     """
     Hàm nội suy ngược newton
     
@@ -20,7 +20,7 @@ def mainNewtonForward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
     Return:
         Trả về giá trị là vị trí của t (phải convert ngược lại ra giá trị x)
     """
-    polyTable, _ = NewtonForwardMain(dataX, dataY)
+    polyTable, _ = mainNewtonForward(dataX, dataY)
     # Đoạn này ta tạo đa thức lặp Phi (t) lặp bằng cách chuyển vế, chuyển số hạng bậc 1 chứa t sang vế trái và chuyển y_ (giá trị nội suy cần tính) sang vế phải
     y0 = polyTable[0][0]
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -58,7 +58,7 @@ def mainNewtonForward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
 
 
 def mainNewtonBackward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
-    polyTable, _ = NewtonBackwardMain(dataX, dataY)
+    polyTable, _ = mainNewtonBackward(dataX, dataY)
     # Đoạn này ta tạo đa thức lặp Phi (t) lặp bằng cách chuyển vế, chuyển số hạng bậc 1 chứa t sang vế trái và chuyển y_ (giá trị nội suy cần tính) sang vế phải
     y0 = polyTable[0][0]
     print(y0)
@@ -93,3 +93,33 @@ def mainNewtonBackward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
         soLanLap += 1
         print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
     return soLanLap, hoiTuHayKhong, t1
+
+def findMonotonicSegments(dataX, dataY):
+    resultX = []
+    resutlY = []
+    # Nếu dộ dài của data nhỏ hơn bằng 2 thì chắc chắn chúng ở trong 1 khoảng đơn điệu
+    # trong trường hợp data dài hơn, ta xét dấu giữa 2 phần tử
+    # nếu giữa hai phần tử đổi dấu => sinh ra 2 khoảng đơn điệu tương ứng.
+    if(len(dataX) <= 2 | len(dataY) <=2):
+        resultX = [dataX]
+        resutlY = [dataY]
+        return resultX,resutlY
+    sign = 1 if dataY[1] - dataY[0] > 0 else -1
+    monotonicX = [dataX[0], dataX[1]]
+    monotonicY = [dataY[0], dataY[1]]
+    for i in range(2,len(dataY)):
+        if i == len(dataY)-1:
+            resultX.append(monotonicX)
+            resutlY.append(monotonicY)
+        if sign*(dataY[i] - dataY[i-1]) >= 0:
+            monotonicX.append(dataX[i])
+            monotonicY.append(dataY[i])
+        else:
+            sign = -sign
+            resultX.append(monotonicX)
+            resutlY.append(monotonicY)
+            monotonicX = [dataX[i-1],dataX[i]]
+            monotonicY = [dataY[i-1],dataY[i]]
+    return resultX,resutlY
+
+print(findMonotonicSegments([1,0,1,3,4,52,1,0,-1,-2,-3,-4],[1,0,1,3,4,52,1,0,-1,-2,-3,-4])[0])

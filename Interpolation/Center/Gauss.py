@@ -21,6 +21,7 @@ def mainGauss1(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int((len(dataX)-1)/2) #khai bao vi tri giua
+    print("Bảng sai phân:")
     print(diffTable)
     for i in range(1,length):
         offset:int #khai bao so chi p(p-1)(p+1)..(p+ offset)
@@ -51,6 +52,7 @@ def mainGauss2(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int(len(dataX)/2) #khai bao vi tri giua tuc la x0
+    print("Bảng sai phân:")
     print(diffTable)
     for i in range(1,length):
         offset:int #khai bao so chi p(p-1)(p+1)..(p + offset)

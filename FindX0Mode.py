@@ -4,6 +4,9 @@ def MarkAtCenterLeft(dataX):
 def MarkAtCenterRight(dataX):
     return dataX[int(len(dataX)/2)]
 
+def MarkAtCenter(dataX):
+    return (dataX[int((len(dataX)-1)/2)] + dataX[int((len(dataX)-1)/2)+1])/2
+
 def MarkAtStart(dataX):
     return dataX[0]
 

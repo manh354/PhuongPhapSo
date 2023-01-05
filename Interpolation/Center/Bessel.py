@@ -27,6 +27,7 @@ def mainNorm(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int((len(dataX)-1)/2) #khai bao vị trí giữa
+    print("Bảng sai phân:")
     print(diffTable)
     polyTable = []
     polyTable.append([1])
@@ -68,6 +69,7 @@ def mainSkewed(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int((len(dataX)-1)/2) #khai bao vị trí giữa
+    print("Bảng sai phân:")
     print(diffTable)
     polyTable = []
     polyTable.append([1])

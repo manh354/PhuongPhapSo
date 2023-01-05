@@ -3,7 +3,7 @@ from Interpolation.InputProcess.SliceData import SliceFromTo, AutoSlice, AutoFin
 from Interpolation.ValuesConvert import*
 from FindX0Mode import*
 
-from Interpolation.Langrange.langrange import main as LangrangeMain
+from Interpolation.Langrange.Langrange import main as LangrangeMain
 from Interpolation.Newton.NewtonForward import mainAny as NewtonForwardAnyMain
 from Interpolation.Newton.NewtonForward import mainEqui as NewtonForwardEquiMain
 from Interpolation.Newton.NewtonBackward import mainAny as NewtonBackwardAnyMain
@@ -14,9 +14,9 @@ from Interpolation.Center.Stirling import main as StirlingMain
 from Interpolation.Center.Gauss import mainGauss1 as Gauss1Main
 from Interpolation.Center.Gauss import mainGauss2 as Gauss2Main
 
-from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangrange as ReverseLangrangeMain
-from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
-from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
+from Interpolation.ReverseInterpolation.ReverseLangrange import mainReverseLangrange as ReverseLangrangeMain
+from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
+from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
 from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
 from Interpolation.TableAndPolynomial import CalcPolyReversedInput
 
@@ -159,7 +159,7 @@ def main():
             right = int(input())
             print("Độ chính xác cần đạt:")
             eps = float(input())
-            ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
+            ndataX, ndataY = SliceByHand(dataX,dataY,left,right)
             solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
-
+ # type: ignore
 main()

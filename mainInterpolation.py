@@ -55,7 +55,7 @@ def menuBessel():
     mode = input()
     if(mode == "1"):
         return BesselNormMain, ConvertXtoT, MarkAtCenterLeft
-    return BesselSkewedMain, ConvertXtoU, MarkAtCenterLeft
+    return BesselSkewedMain, ConvertXtoU, MarkAtCenter
 
 def menuNewton():
     print("Chon loai phuong phap newton ban muon su dung:")
@@ -151,3 +151,5 @@ def main():
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
             solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
+
+main()

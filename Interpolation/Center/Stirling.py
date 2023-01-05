@@ -26,6 +26,7 @@ def main(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int(len(dataX)/2) #khai bao vị trí giữa
+    print("Bảng sai phân:")
     print(diffTable)
     polyTable = []
     polyTable.append([1])

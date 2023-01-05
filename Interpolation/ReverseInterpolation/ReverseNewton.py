@@ -122,4 +122,3 @@ def findMonotonicSegments(dataX, dataY):
             monotonicY = [dataY[i-1],dataY[i]]
     return resultX,resutlY
 
-print(findMonotonicSegments([1,0,1,3,4,52,1,0,-1,-2,-3,-4],[1,0,1,3,4,52,1,0,-1,-2,-3,-4])[0])

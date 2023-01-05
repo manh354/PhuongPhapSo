@@ -39,11 +39,3 @@ def main(dataX, dataY):
         polynomials.append(ithPolynomial)
     poly = ConvertLangrangeTableToPoly(polynomials)
     return polynomials, poly
-
-x = []
-for i in range(-4,5):
-    x.append(i/4)
-_, p = main([-1.1152742105263158, -1.2073642105263158, -1.2494842105263158, -1.2481342105263158, -1.2082042105263158, -1.1332242105263157, -1.0255742105263157, -0.5172542105263158, -0.28588421052631574],x)
-print(p)
-v = CalcPolyReversedInput(p,-1.25)
-print(v)

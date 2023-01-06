@@ -1,4 +1,5 @@
 import sys
+from Interpolation.tableAndPolynomial import ConvertPolyTableToPoly, CreateChangedPolynomialDegreeByXamount, CreateDifferenceTable, CreateFactorialTable, CreateRootPolySqr, MulPolyWithCoef, MulTwoPoly
 sys.path.append('../PhuongPhapSo')
 from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterStirling
 from Interpolation.Center.dataOutputCenter import output

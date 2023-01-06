@@ -32,7 +32,7 @@ def findAllSegmentContainPointY(monotonic_segments_list_x : list[list], monotoni
     allSegmentX = []
     allSegmentY = []
     for i,segment in enumerate(monotonic_segments_list_y):
-        if(segment[0] >= point_y and segment[-1] <= point_y):
+        if((segment[0] >= point_y and segment[-1] <= point_y) or (segment[0]<= point_y and segment[-1]>=point_y)):
             allSegmentX.append (monotonic_segments_list_x[i])
             allSegmentY.append( monotonic_segments_list_y[i])
     return allSegmentX,allSegmentY

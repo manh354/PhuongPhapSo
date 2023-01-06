@@ -131,14 +131,7 @@ def main():
             print("Tương ứng với mốc này, có đoạn đơn điệu sau:")
             print("X: {0}".format(dataX))
             print("Y: {0}".format(dataY))
-            print("Chọn mốc nội suy ngoài cùng bên trái:")
-            left = int(input())
-            print("Chọn mốc nội suy ngoài cùng bên phải:")
-            right = int(input())
-            ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            polyTable,poly = noiSuyNguoc(ndataX, ndataY)
-            ketquaNoiSuy = CalcPolyReversedInput(poly, value)
-            print("Kết quả tính toán nội suy ngược tại y = {0} là: {1}".format(value,ketquaNoiSuy))
+            _, _,polyTable,poly = noiSuyNguoc(dataX, dataY, value)
 
         if noiSuyNguoc == ReverseNewtonForwardMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
@@ -150,7 +143,7 @@ def main():
             print("Độ chính xác cần đạt:")
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            solanlap, hoitu, ketqua, x, _1 = noiSuyNguoc(ndataX,ndataY,value,eps)
+            solanlap, hoitu, ketqua, x= noiSuyNguoc(ndataX,ndataY,value,eps)
             print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
 
         if noiSuyNguoc == ReverseNewtonBackwardMain:
@@ -163,7 +156,7 @@ def main():
             print("Độ chính xác cần đạt:")
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            solanlap, hoitu, ketqua ,x, _2 = noiSuyNguoc(ndataX,ndataY,value,eps)
+            solanlap, hoitu, ketqua ,x= noiSuyNguoc(ndataX,ndataY,value,eps)
             print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
 
 main()

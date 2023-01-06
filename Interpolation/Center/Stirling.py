@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../PhuongPhapSo')
 
-from Interpolation.TableAndPolynomial import *
+from Interpolation.tableAndPolynomial import *
 
 # cách chọn chỉ số của Stirling trên bảng sai phân (lẻ số mốc)
 #===============================

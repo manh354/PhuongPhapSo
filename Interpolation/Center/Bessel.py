@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../PhuongPhapSo')
 
-from Interpolation.TableAndPolynomial import *
+from Interpolation.tableAndPolynomial import *
 
 # cách chọn chỉ số của Bessel trên bảng sai phân (chẵn số mốc)
 #=================================

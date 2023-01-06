@@ -1,24 +1,24 @@
 from Interpolation.InputProcess.InputInterface import main as InputMain
 from Interpolation.InputProcess.SliceData import SliceFromTo, AutoSlice, AutoFindSlice, SliceByHand
-from Interpolation.ValuesConvert import*
-from FindX0Mode import*
+from Interpolation.valuesConvert import*
+from findX0Mode import*
 
-from Interpolation.Langrange.Langrange import main as LangrangeMain
-from Interpolation.Newton.NewtonForward import mainAny as NewtonForwardAnyMain
-from Interpolation.Newton.NewtonForward import mainEqui as NewtonForwardEquiMain
-from Interpolation.Newton.NewtonBackward import mainAny as NewtonBackwardAnyMain
-from Interpolation.Newton.NewtonBackward import mainEqui as NewtonBackwardEquiMain
-from Interpolation.Center.Bessel import mainNorm as BesselNormMain
-from Interpolation.Center.Bessel import mainSkewed as BesselSkewedMain
-from Interpolation.Center.Stirling import main as StirlingMain
-from Interpolation.Center.Gauss import mainGauss1 as Gauss1Main
-from Interpolation.Center.Gauss import mainGauss2 as Gauss2Main
+from Interpolation.Langrange.langrange import main as LangrangeMain
+from Interpolation.Newton.newtonForward import mainAny as NewtonForwardAnyMain
+from Interpolation.Newton.newtonForward import mainEqui as NewtonForwardEquiMain
+from Interpolation.Newton.newtonBackward import mainAny as NewtonBackwardAnyMain
+from Interpolation.Newton.newtonBackward import mainEqui as NewtonBackwardEquiMain
+from Interpolation.Center.bessel import mainNorm as BesselNormMain
+from Interpolation.Center.bessel import mainSkewed as BesselSkewedMain
+from Interpolation.Center.stirling import main as StirlingMain
+from Interpolation.Center.gauss import mainGauss1 as Gauss1Main
+from Interpolation.Center.gauss import mainGauss2 as Gauss2Main
 
-from Interpolation.ReverseInterpolation.ReverseLangrange import mainReverseLangrange as ReverseLangrangeMain
-from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
-from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonBackwardReverse as ReverseNewtonBackwardMain
+from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangrange as ReverseLangrangeMain
+from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
+from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
 from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
-from Interpolation.TableAndPolynomial import CalcPolyReversedInput
+from Interpolation.tableAndPolynomial import CalcPolyReversedInput
 
 
 def menuNoisuy():
@@ -128,6 +128,7 @@ def main():
         polyTable,poly = noiSuy(ndataX, ndataY)
         print("Điểm neo t là {0}".format(mark(ndataX)))
         ketquaNoiSuy = CalcPolyReversedInput(poly,conversion(value, mark(ndataX), h))
+        
         print("Kết quả tính toán nội suy tại x = {0}, tương đương t = {1} là: {2}".format(value,conversion(value, mark(ndataX), h), ketquaNoiSuy))
 
     elif char1 == "2":
@@ -159,7 +160,7 @@ def main():
             right = int(input())
             print("Độ chính xác cần đạt:")
             eps = float(input())
-            ndataX, ndataY = SliceByHand(dataX,dataY,left,right)
+            ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
             solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
 
         if noiSuyNguoc == ReverseNewtonBackwardMain:
@@ -176,6 +177,8 @@ def main():
             right = int(input())
             print("Độ chính xác cần đạt:")
             eps = float(input())
-            ndataX, ndataY = SliceByHand(dataX,dataY,left,right)
+            ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
             solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
+
+
 main()

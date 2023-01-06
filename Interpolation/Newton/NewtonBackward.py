@@ -1,8 +1,8 @@
 import sys
 sys.path.append('../PhuongPhapSo')
 
-from Interpolation.TableAndPolynomial import *
-from Interpolation.ValuesConvert import *
+from Interpolation.tableAndPolynomial import *
+from Interpolation.valuesConvert import *
 
 def mainAny(dataX, dataY):
     """

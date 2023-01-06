@@ -29,6 +29,7 @@ def wrapperNewtonBackwardAny(dataX, dataY, x):
     divtable, polytable, poly = mainAny(dataX,dataY)
     value = CalcPolyReversedInput(poly,x)
     outputAny(dataX,dataY,divtable,polytable,poly,x,value)
+    return poly
 
 def mainEqui(dataX, dataY):
     """
@@ -58,3 +59,4 @@ def wrapperNewtonBackwardEqui(dataX, dataY, x):
     t = (x-x0)/h
     value = CalcPolyReversedInput(poly,t)
     outputEqui(dataX,dataY,diffTable,polyTable,poly,x,value)
+    return poly

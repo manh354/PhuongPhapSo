@@ -20,6 +20,8 @@ from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackwardR
 from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
 from Interpolation.tableAndPolynomial import CalcPolyReversedInput
 
+import matplotlib.pyplot as plt
+import numpy as np
 
 def menuNoisuy():
     print("Chọn PHƯƠNG PHÁP NỘI SUY bạn muốn sử dụng")
@@ -133,6 +135,7 @@ def main():
             print("Y: {0}".format(dataY))
             _, _,polyTable,poly = noiSuyNguoc(dataX, dataY, value)
 
+
         if noiSuyNguoc == ReverseNewtonForwardMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
             value = float(input())
@@ -158,5 +161,6 @@ def main():
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
             solanlap, hoitu, ketqua ,x= noiSuyNguoc(ndataX,ndataY,value,eps)
             print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
+
 
 main()

@@ -28,7 +28,7 @@ def findMonotonicSegments(dataX, dataY):
             monotonicY = [dataY[i-1],dataY[i]]
     return resultX,resutlY
 
-def chooseSegmentContainPointY(monotonic_segments_list_x : List[list], monotonic_segments_list_y: List[list], point_y):
+def chooseSegmentContainPointY(monotonic_segments_list_x : list[list], monotonic_segments_list_y: list[list], point_y):
     for i,segment in enumerate(monotonic_segments_list_y):
         if(segment[0] >= point_y and segment[-1] <= point_y):
             return monotonic_segments_list_x[i], monotonic_segments_list_y[i]

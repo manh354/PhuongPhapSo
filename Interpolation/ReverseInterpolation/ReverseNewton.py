@@ -54,10 +54,12 @@ def mainNewtonForwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
             break
         soLanLap += 1
         print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
-    return soLanLap, hoiTuHayKhong, t1
+    h = dataX[1] - dataX[0]
+    x = dataX[0] + t1* h
+    return soLanLap, hoiTuHayKhong, t1, x, h
 
 
-def mainNewtonBackward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
+def mainNewtonBackwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
     polyTable, _ = mainNewtonBackward(dataX, dataY)
     # Đoạn này ta tạo đa thức lặp Phi (t) lặp bằng cách chuyển vế, chuyển số hạng bậc 1 chứa t sang vế trái và chuyển y_ (giá trị nội suy cần tính) sang vế phải
     y0 = polyTable[0][0]
@@ -92,4 +94,6 @@ def mainNewtonBackward(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
             break
         soLanLap += 1
         print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
-    return soLanLap, hoiTuHayKhong, t1
+    h = dataX[1] - dataX[0]
+    x = dataX[len(dataX)-1] + t1* h
+    return soLanLap, hoiTuHayKhong, t1, x, h

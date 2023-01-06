@@ -3,9 +3,9 @@ sys.path.append('../PhuongPhapSo')
 
 import math
 
-from Interpolation.TableAndPolynomial import *
-from Interpolation.Newton.NewtonBackward import mainEqui as mainNewtonBackward
-from Interpolation.Newton.NewtonForward import mainEqui as mainNewtonForward
+from Interpolation.tableAndPolynomial import *
+from Interpolation.Newton.newtonBackward import mainEqui as mainNewtonBackward
+from Interpolation.Newton.newtonForward import mainEqui as mainNewtonForward
 
 def mainNewtonForwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
     """

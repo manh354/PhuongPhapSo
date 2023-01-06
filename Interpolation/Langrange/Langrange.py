@@ -5,7 +5,7 @@ sys.path.append('../PhuongPhapSo')
 
 import numpy as np
 
-from Interpolation.TableAndPolynomial import *
+from Interpolation.tableAndPolynomial import *
 
 def CalculateDiValue(roots: list, position):
     result = 1

@@ -126,23 +126,16 @@ def main():
         if noiSuyNguoc == ReverseLangrangeMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
             value = float(input())
-            print("Chọn mốc nội suy ngoài cùng bên trái:")
-            left = int(input())
-            print("Chọn mốc nội suy ngoài cùng bên phải:")
-            right = int(input())
-            ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            polyTable,poly = noiSuyNguoc(ndataX, ndataY)
-            ketquaNoiSuy = CalcPolyReversedInput(poly, value)
-            print("Kết quả tính toán nội suy ngược tại y = {0} là: {1}".format(value,ketquaNoiSuy))
-
-        if noiSuyNguoc == ReverseNewtonForwardMain:
-            print("Nhập điểm bạn muốn tính nội suy ngược:")
-            value = float(input())
             dataX, dataY = FindUsableSegment(dataX,dataY, value)
             print("Giá trị bạn muốn tính nội suy ngược là: {0}".format(value))
             print("Tương ứng với mốc này, có đoạn đơn điệu sau:")
             print("X: {0}".format(dataX))
             print("Y: {0}".format(dataY))
+            _, _,polyTable,poly = noiSuyNguoc(dataX, dataY, value)
+
+        if noiSuyNguoc == ReverseNewtonForwardMain:
+            print("Nhập điểm bạn muốn tính nội suy ngược:")
+            value = float(input())
             print("Chọn mốc nội suy ngoài cùng bên trái:")
             left = int(input())
             print("Chọn mốc nội suy ngoài cùng bên phải:")
@@ -150,17 +143,12 @@ def main():
             print("Độ chính xác cần đạt:")
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            solanlap, hoitu, ketqua, x, _1 = noiSuyNguoc(ndataX,ndataY,value,eps)
+            solanlap, hoitu, ketqua, x= noiSuyNguoc(ndataX,ndataY,value,eps)
             print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
 
         if noiSuyNguoc == ReverseNewtonBackwardMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
             value = float(input())
-            dataX, dataY = FindUsableSegment(dataX,dataY, value)
-            print("Giá trị bạn muốn tính nội suy ngược là: {0}".format(value))
-            print("Tương ứng với mốc này, có đoạn đơn điệu sau:")
-            print("X: {0}".format(dataX))
-            print("Y: {0}".format(dataY))
             print("Chọn mốc nội suy ngoài cùng bên trái:")
             left = int(input())
             print("Chọn mốc nội suy ngoài cùng bên phải:")
@@ -168,7 +156,7 @@ def main():
             print("Độ chính xác cần đạt:")
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            solanlap, hoitu, ketqua ,x, _2 = noiSuyNguoc(ndataX,ndataY,value,eps)
+            solanlap, hoitu, ketqua ,x= noiSuyNguoc(ndataX,ndataY,value,eps)
             print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
 
 main()

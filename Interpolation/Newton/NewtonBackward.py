@@ -47,7 +47,8 @@ def mainEqui(dataX, dataY):
     for i in range(0,length):
         polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[-1,i] / facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = dataX[len(dataX)-1]
+    return diffTable, polyTable, poly, x0
 
 
 def wrapperNewtonBackwardEqui(dataX, dataY, x):

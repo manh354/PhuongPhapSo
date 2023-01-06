@@ -16,7 +16,7 @@ from Interpolation.Center.Gauss import mainGauss2 as Gauss2Main
 
 from Interpolation.ReverseInterpolation.ReverseLangrange import mainReverseLangrange as ReverseLangrangeMain
 from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
-from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
+from Interpolation.ReverseInterpolation.ReverseNewton import mainNewtonBackwardReverse as ReverseNewtonBackwardMain
 from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
 from Interpolation.TableAndPolynomial import CalcPolyReversedInput
 
@@ -51,8 +51,8 @@ def menuGauss():
 
 def menuBessel():
     print("Chọn loại phương pháp NỘI SUY BESSEL bạn muốn sử dụng:")
-    print("1: Bessel theo t")
-    print("2: Bessel theo u")
+    print("1: Bessel theo t (bên trái)")
+    print("2: Bessel theo t - 1/2 (ở giữa)")
     mode = input()
     if(mode == "1"):
         return BesselNormMain, ConvertXtoT, MarkAtCenterLeft
@@ -161,5 +161,21 @@ def main():
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left,right)
             solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
- # type: ignore
+
+        if noiSuyNguoc == ReverseNewtonBackwardMain:
+            print("Nhập điểm bạn muốn tính nội suy ngược:")
+            value = float(input())
+            dataX, dataY = FindUsableSegment(dataX,dataY, value)
+            print("Giá trị bạn muốn tính nội suy ngược là: {0}".format(value))
+            print("Tương ứng với mốc này, có đoạn đơn điệu sau:")
+            print("X: {0}".format(dataX))
+            print("Y: {0}".format(dataY))
+            print("Chọn mốc nội suy ngoài cùng bên trái:")
+            left = int(input())
+            print("Chọn mốc nội suy ngoài cùng bên phải:")
+            right = int(input())
+            print("Độ chính xác cần đạt:")
+            eps = float(input())
+            ndataX, ndataY = SliceByHand(dataX,dataY,left,right)
+            solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
 main()

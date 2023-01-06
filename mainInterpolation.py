@@ -16,7 +16,7 @@ from Interpolation.Center.gauss import mainGauss2 as Gauss2Main
 
 from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangrange as ReverseLangrangeMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
-from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackward as ReverseNewtonBackwardMain
+from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackwardReverse as ReverseNewtonBackwardMain
 from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
 from Interpolation.tableAndPolynomial import CalcPolyReversedInput
 
@@ -161,7 +161,8 @@ def main():
             print("Độ chính xác cần đạt:")
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
+            solanlap, hoitu, ketqua, x, _1 = noiSuyNguoc(ndataX,ndataY,value,eps)
+            print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
 
         if noiSuyNguoc == ReverseNewtonBackwardMain:
             print("Nhập điểm bạn muốn tính nội suy ngược:")
@@ -178,7 +179,7 @@ def main():
             print("Độ chính xác cần đạt:")
             eps = float(input())
             ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
-            solanlap, ketqua, hoitu = noiSuyNguoc(ndataX,ndataY,value,eps)
-
+            solanlap, hoitu, ketqua ,x, _2 = noiSuyNguoc(ndataX,ndataY,value,eps)
+            print("Sau: {0} lần lặp: kết quả theo t là {1} tương đương x = {2}".format(solanlap,ketqua, x))
 
 main()

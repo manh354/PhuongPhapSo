@@ -53,22 +53,13 @@ def mainNewtonForwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
             print("Giá trị KHÔNG HỘI TỤ")
             break
         soLanLap += 1
-        print("Lần lặp thứ:{0}; giá trị t{0} = {1}".format(soLanLap,t1))
-    return soLanLap, hoiTuHayKhong, t1
+        print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
+    h = dataX[1] - dataX[0]
+    x = dataX[0] + t1* h
+    return soLanLap, hoiTuHayKhong, t1, x, h
+
 
 def mainNewtonBackwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
-    """
-    Hàm nội suy ngược Newton lùi
-    
-    Params:
-        dataX: đầu vào X
-        dataY: đầu vào Y
-        diemCanNoiSuyNguoc: điểm cần nội suy ngược
-        doChinhXac: độ chính xác cần đạt (sẽ tính 2 lần lặp liên tiếp mà độ lớn hiệu không vượt quá giá trị này)
-    
-    Return:
-        Trả về giá trị là vị trí của t (phải convert ngược lại ra giá trị x)
-    """
     polyTable, _ = mainNewtonBackward(dataX, dataY)
     # Đoạn này ta tạo đa thức lặp Phi (t) lặp bằng cách chuyển vế, chuyển số hạng bậc 1 chứa t sang vế trái và chuyển y_ (giá trị nội suy cần tính) sang vế phải
     y0 = polyTable[0][0]
@@ -104,4 +95,6 @@ def mainNewtonBackwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
             break
         soLanLap += 1
         print("Lần lặp thứ:{0}; giá trị t{0} = {1}".format(soLanLap,t1))
-    return soLanLap, hoiTuHayKhong, t1
+    h = dataX[1] - dataX[0]
+    x = dataX[len(dataX)-1] + t1* h
+    return soLanLap, hoiTuHayKhong, t1, x, h

@@ -3,16 +3,16 @@ from Interpolation.InputProcess.SliceData import SliceFromTo, AutoSlice, AutoFin
 from Interpolation.valuesConvert import*
 from findX0Mode import*
 
-from Interpolation.Langrange.langrange import main as LangrangeMain
-from Interpolation.Newton.newtonForward import mainAny as NewtonForwardAnyMain
-from Interpolation.Newton.newtonForward import mainEqui as NewtonForwardEquiMain
-from Interpolation.Newton.newtonBackward import mainAny as NewtonBackwardAnyMain
-from Interpolation.Newton.newtonBackward import mainEqui as NewtonBackwardEquiMain
-from Interpolation.Center.bessel import mainNorm as BesselNormMain
-from Interpolation.Center.bessel import mainSkewed as BesselSkewedMain
-from Interpolation.Center.stirling import main as StirlingMain
-from Interpolation.Center.gauss import mainGauss1 as Gauss1Main
-from Interpolation.Center.gauss import mainGauss2 as Gauss2Main
+from Interpolation.Langrange.langrange import wrapperLangrange as LangrangeMain
+from Interpolation.Newton.newtonForward import wrapperNewtonForwardAny as NewtonForwardAnyMain
+from Interpolation.Newton.newtonForward import wrapperNewtonForwardEqui as NewtonForwardEquiMain
+from Interpolation.Newton.newtonBackward import wrapperNewtonBackwardAny as NewtonBackwardAnyMain
+from Interpolation.Newton.newtonBackward import wrapperNewtonBackwardEqui as NewtonBackwardEquiMain
+from Interpolation.Center.bessel import wrapperBesselNorm as BesselNormMain
+from Interpolation.Center.bessel import wrapperBesselSkewed as BesselSkewedMain
+from Interpolation.Center.stirling import wrapperStirling as StirlingMain
+from Interpolation.Center.gauss import wrapperGauss1 as Gauss1Main
+from Interpolation.Center.gauss import wrapperGauss2 as Gauss2Main
 
 from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangrange as ReverseLangrangeMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
@@ -30,14 +30,14 @@ def menuNoisuy():
     print("5: Stirling")
     mode = input()
     if(mode == "1"):
-        return LangrangeMain, NotConvert, NoMark
+        return LangrangeMain
     elif(mode == "2"):
         return menuNewton()
     elif(mode == "3"):
         return menuGauss()
     elif(mode == "4"):
         return menuBessel()
-    return StirlingMain, ConvertXtoT, MarkAtCenterLeft
+    return StirlingMain
 
 
 def menuGauss():
@@ -46,8 +46,8 @@ def menuGauss():
     print("2: Gauss 2 (Chọn bên trái trước, bên phải sau)")
     mode = input()
     if(mode == "1"):
-        return Gauss1Main, ConvertXtoT, MarkAtCenterLeft
-    return Gauss2Main, ConvertXtoT, MarkAtCenterRight
+        return Gauss1Main
+    return Gauss2Main
 
 def menuBessel():
     print("Chọn loại phương pháp NỘI SUY BESSEL bạn muốn sử dụng:")
@@ -55,8 +55,8 @@ def menuBessel():
     print("2: Bessel theo u")
     mode = input()
     if(mode == "1"):
-        return BesselNormMain, ConvertXtoT, MarkAtCenterLeft
-    return BesselSkewedMain, ConvertXtoU, MarkAtCenter
+        return BesselNormMain
+    return BesselSkewedMain
 
 def menuNewton():
     print("Chọn loại phương pháp NỘI SUY NEWTON bạn muốn sử dụng:")
@@ -66,12 +66,12 @@ def menuNewton():
     print("4: Newton lùi với mốc CÁC ĐỀU")
     mode = input()
     if(mode == "1"):
-        return NewtonForwardAnyMain, NotConvert, NoMark
+        return NewtonForwardAnyMain
     elif(mode == "2"):
-        return NewtonForwardEquiMain, ConvertXtoT, MarkAtStart
+        return NewtonForwardEquiMain
     elif(mode == "3"):
-        return NewtonBackwardAnyMain, NotConvert, NoMark
-    return NewtonBackwardEquiMain, ConvertXtoT, MarkAtEnd
+        return NewtonBackwardAnyMain
+    return NewtonBackwardEquiMain
 
 def menuNoisuyNguoc():
     print("Chọn phương pháp NỘI SUY NGƯỢC bạn muốn sử dụng:")
@@ -113,23 +113,12 @@ def main():
     char1 = input()
 
     if char1 == "1":
-        noiSuy, conversion, mark = menuNoisuy()
+        noiSuy = menuNoisuy()
         ## Chọn điểm tính mốc
         print("Chọn điểm bạn muốn tính nội suy:")
         value = float(input())
-        ## Chọn số mốc nội suy
-        print("Chọn mốc nội suy ngoài cùng bên trái:")
-        left = float(input())
-        print("Chọn mốc nội suy ngoài cùng bên phải:")
-        right = float(input())
-        ## Xử lý mốc nội suy
-        ndataX, ndataY = SliceByHand(dataX,dataY,left, right)
         ## Xử lý nội suy
-        polyTable,poly = noiSuy(ndataX, ndataY)
-        print("Điểm neo t là {0}".format(mark(ndataX)))
-        ketquaNoiSuy = CalcPolyReversedInput(poly,conversion(value, mark(ndataX), h))
-        
-        print("Kết quả tính toán nội suy tại x = {0}, tương đương t = {1} là: {2}".format(value,conversion(value, mark(ndataX), h), ketquaNoiSuy))
+        noiSuy(dataX, dataY,value)
 
     elif char1 == "2":
         noiSuyNguoc = menuNoisuyNguoc()

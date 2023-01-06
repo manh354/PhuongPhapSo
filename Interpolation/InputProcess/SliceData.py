@@ -36,11 +36,17 @@ def MaxIndexFromRightToLeft(dataX, dataY, _leftValue):
         else: break
     return rightIndex
 
-def AutoFindSlice(dataX, dataY, Node):
-    center = MaxIndexFromCenter(dataX, dataY, Node)
-    left = MaxIndexFromLeftToRight(dataX, dataY, Node)
-    right = MaxIndexFromRightToLeft(dataX, dataY, Node)
+def AutoFindSlice(dataX, dataY, _value):
+    center = MaxIndexFromCenter(dataX, dataY, _value)
+    left = MaxIndexFromLeftToRight(dataX, dataY, _value)
+    right = MaxIndexFromRightToLeft(dataX, dataY, _value)
     return left, center,right
+
+def AutoFindSliceWhenIndexIsKnown(dataX, dataY, index):
+    right = (len(dataX) -1) - (index+1) +1
+    left = (index -1) - 0 + 1
+    center = 2*min((left,right))
+    return left, right, center
 
 def AutoSlice(dataX, dataY, nodeIndex, NumberOfNodesNeeded,mode):
     if(mode == "center"):

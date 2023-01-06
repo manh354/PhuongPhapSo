@@ -1,4 +1,6 @@
 import sys
+from Interpolation.Newton.dataSlicingNewton import sliceInputNewtonForward
+from Interpolation.Newton.dataOutputNewton import outputAny, outputEqui
 sys.path.append('../PhuongPhapSo')
 
 from Interpolation.tableAndPolynomial import *
@@ -20,9 +22,13 @@ def mainAny(dataX, dataY):
     for i in range(0,length):
         polyTable[i] = MulPolyWithCoef(polyTable[i], divTable[i,i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    return divTable,polyTable, poly
 
-
+def wrapperNewtonForwardAny(dataX, dataY, x):
+    dataX, dataY = sliceInputNewtonForward(dataX,dataY)
+    divtable, polytable, poly = mainAny(dataX,dataY)
+    value = CalcPolyReversedInput(poly,x)
+    outputAny(dataX,dataY,divtable,polytable,poly,x,value)
 
 def mainEqui(dataX, dataY):
     """
@@ -34,11 +40,18 @@ def mainEqui(dataX, dataY):
     #print(polyTable[0])
     diffTable = CreateDifferenceTable(dataX, dataY)
     facTable = CreateFactorialTable(length)
-    print("Bảng sai phân:")
-    print(diffTable)
     for i in range(1,length):
         polyTable.append(MulTwoPoly(polyTable[i-1],CreateRootPoly(i-1)))
     for i in range(0,length):
         polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[i,i] / facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = dataX[0]
+    return diffTable, polyTable, poly, x0
+
+def wrapperNewtonForwardEqui(dataX, dataY, x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputNewtonForward(dataX,dataY)
+    diffTable, polyTable, poly, x0 = mainEqui(dataX,dataY)
+    t = (x-x0)/h
+    value = CalcPolyReversedInput(poly,t)
+    outputEqui(dataX,dataY,diffTable,polyTable,poly,x,value)

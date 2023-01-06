@@ -1,4 +1,6 @@
 import sys
+from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterBessel
+from Interpolation.Center.dataOutputCenter import output
 sys.path.append('../PhuongPhapSo')
 
 from Interpolation.tableAndPolynomial import *
@@ -17,7 +19,7 @@ from Interpolation.tableAndPolynomial import *
 #                           -   -
 #=================================
 
-def mainNorm(dataX, dataY):
+def mainBesselNorm(dataX, dataY):
     """
     Tạo đa thức Bessel dạng biến t (chưa qua đổi biến lần 2) . Cần 2n điểm đầu vào
     ---
@@ -27,8 +29,6 @@ def mainNorm(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int((len(dataX)-1)/2) #khai bao vị trí giữa
-    print("Bảng sai phân:")
-    print(diffTable)
     polyTable = []
     polyTable.append([1])
     if length != 1:
@@ -50,16 +50,24 @@ def mainNorm(dataX, dataY):
         # để hiểu hơn thì có thể xem biểu đồ chọn chỉ số ở trên
         if i%2 == 0:
             # nếu đa thức vị trí i là chẵn thì bị ảnh hưởng bởi 2 hệ số trên bảng sai phân (2 hệ số cộng vào chia đôi)
-            polyTable[i] = MulPolyWithCoef(polyTable[i], (diffTable[currentPos,i] + diffTable[currentPos-1,i])/ (2*facTable[i]))
+            polyTable[i] = MulPolyWithCoef(polyTable[i], (diffTable[currentPos,i] + diffTable[currentPos+1,i])/ (2*facTable[i]))
         else:
             # nếu đa thức vị trí i là lẻ thì chỉ bị ảnh hưởng bởi 1 hệ số trên bảng sai phân 
             polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[currentPos,i]/ facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = dataX[middle]
+    return diffTable,polyTable, poly,x0
 
+# Hàm này dùng để giao tiếp với main
+def wrapperBesselNorm(dataX, dataY,x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputFromCenterBessel(dataX, dataY)
+    diffTable,polytable, poly, x0 = mainBesselNorm(dataX,dataY)
+    t = (x-x0)/h
+    interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
+    output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
 
-
-def mainSkewed(dataX, dataY):
+def mainBesselSkewed(dataX, dataY):
     """
     Tạo đa thức Bessel dạng biến u (u = t - 1/2)
     ---
@@ -69,8 +77,6 @@ def mainSkewed(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int((len(dataX)-1)/2) #khai bao vị trí giữa
-    print("Bảng sai phân:")
-    print(diffTable)
     polyTable = []
     polyTable.append([1])
     if length != 1:
@@ -92,9 +98,20 @@ def mainSkewed(dataX, dataY):
         # để hiểu hơn thì có thể xem biểu đồ chọn chỉ số ở trên
         if i%2 == 0:
             # nếu đa thức vị trí i là chẵn thì bị ảnh hưởng bởi 2 hệ số trên bảng sai phân (2 hệ số cộng vào chia đôi)
-            polyTable[i] = MulPolyWithCoef(polyTable[i], (diffTable[currentPos,i] + diffTable[currentPos-1,i])/ (2*facTable[i]))
+            polyTable[i] = MulPolyWithCoef(polyTable[i], (diffTable[currentPos,i] + diffTable[currentPos+1,i])/ (2*facTable[i]))
         else:
             # nếu đa thức vị trí i là lẻ thì chỉ bị ảnh hưởng bởi 1 hệ số trên bảng sai phân 
             polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[currentPos,i]/ facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = 0.5*( dataX[middle] + dataX[middle+1])
+    return diffTable, polyTable, poly, x0
+
+def wrapperBesselSkewed(dataX, dataY,x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputFromCenterBessel(dataX, dataY)
+    diffTable,polytable, poly, x0 = mainBesselSkewed(dataX,dataY)
+    t = (x-x0)/h 
+    interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
+    output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
+
+

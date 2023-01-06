@@ -9,7 +9,7 @@ from Interpolation.Newton.newtonForward import mainEqui as mainNewtonForward
 
 def mainNewtonForwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
     """
-    Hàm nội suy ngược newton
+    Hàm nội suy ngược Newton tiến
     
     Params:
         dataX: đầu vào X
@@ -46,11 +46,11 @@ def mainNewtonForwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
         t1 = -CalcPolyReversedInput(iteratePoly,t0)/deltaY0
         if(math.isinf(t1)):
             hoiTuHayKhong = False
-            print("Gia tri ra VO CUNG")
+            print("Giá trị ra VÔ CÙNG")
             break
         if(soLanLap > 1000):
             hoiTuHayKhong = False
-            print("Gia tri khong hoi tu")
+            print("Giá trị KHÔNG HỘI TỤ")
             break
         soLanLap += 1
         print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
@@ -77,23 +77,24 @@ def mainNewtonBackwardReverse(dataX, dataY, diemCanNoiSuyNguoc, doChinhXac):
 
     # để bắt đầu lặp, ta cần gán cho t0 giá trị ban đầu, lấy bằng (y_ - y0)/delta y0
     t0 = -polyTable[0][0]/deltaY0 # vừa tính ở trên : polyTable[0][0] = y0 - y_
+    print(t0)
     t1 = -CalcPolyReversedInput(iteratePoly,t0)/deltaY0 # tính lần lặp đầu
+    print(t1)
     soLanLap = int(1)
-    print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
     hoiTuHayKhong = True
     while(abs(t1-t0)>= doChinhXac):
         t0 = t1
         t1 = -CalcPolyReversedInput(iteratePoly,t0)/deltaY0
         if(math.isinf(t1)):
             hoiTuHayKhong = False
-            print("Gia tri ra VO CUNG")
+            print("Giá trị ra VÔ CÙNG")
             break
         if(soLanLap > 1000):
             hoiTuHayKhong = False
-            print("Gia tri khong hoi tu")
+            print("Giá trị không hội tụ")
             break
         soLanLap += 1
-        print("Lan lap thu:{0}; gia tri t{0} = {1}".format(soLanLap,t1))
+        print("Lần lặp thứ:{0}; giá trị t{0} = {1}".format(soLanLap,t1))
     h = dataX[1] - dataX[0]
     x = dataX[len(dataX)-1] + t1* h
     return soLanLap, hoiTuHayKhong, t1, x, h

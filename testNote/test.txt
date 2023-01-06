@@ -1,1 +1,1 @@
-chưa có NSnewton ngược lùi 
+nội suy trung tâm bessel, Stirling chưa có check số mốc 

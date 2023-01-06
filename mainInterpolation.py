@@ -51,8 +51,8 @@ def menuGauss():
 
 def menuBessel():
     print("Chọn loại phương pháp NỘI SUY BESSEL bạn muốn sử dụng:")
-    print("1: Bessel theo t")
-    print("2: Bessel theo u")
+    print("1: Bessel theo t (bên trái)")
+    print("2: Bessel theo t - 1/2 (ở giữa)")
     mode = input()
     if(mode == "1"):
         return BesselNormMain

@@ -1,3 +1,5 @@
+from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterGauss1, sliceInputFromCenterGauss2
+from Interpolation.Center.dataOutputCenter import output
 import sys
 sys.path.append('../PhuongPhapSo')
 
@@ -21,8 +23,6 @@ def mainGauss1(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int((len(dataX)-1)/2) #khai bao vi tri giua
-    print("Bảng sai phân:")
-    print(diffTable)
     for i in range(1,length):
         offset:int #khai bao so chi p(p-1)(p+1)..(p+ offset)
         if i%2==0:
@@ -33,7 +33,16 @@ def mainGauss1(dataX, dataY):
     for i in range(0, length):
         polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[middle+ int((i+1)/2),i]/ facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = dataX[middle]
+    return diffTable,polyTable, poly, x0
+
+def wrapperGauss1(dataX, dataY,x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputFromCenterGauss1(dataX, dataY)
+    diffTable,polytable, poly, x0 = mainGauss1(dataX,dataY)
+    t = (x-x0)/h
+    interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
+    output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
 
 # cách chọn chỉ số của gauss2 trên bảng sai phân
 #===============================
@@ -52,8 +61,6 @@ def mainGauss2(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int(len(dataX)/2) #khai bao vi tri giua tuc la x0
-    print("Bảng sai phân:")
-    print(diffTable)
     for i in range(1,length):
         offset:int #khai bao so chi p(p-1)(p+1)..(p + offset)
         if i%2!=0:
@@ -64,5 +71,13 @@ def mainGauss2(dataX, dataY):
     for i in range(0, length):
         polyTable[i] = MulPolyWithCoef(polyTable[i], diffTable[middle+ int(i/2),i]/ facTable[i])
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = dataX[middle]
+    return diffTable,polyTable, poly,x0
 
+def wrapperGauss2(dataX, dataY,x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputFromCenterGauss2(dataX, dataY)
+    diffTable,polytable, poly, x0 = mainGauss2(dataX,dataY)
+    t = (x-x0)/h
+    interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
+    output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)

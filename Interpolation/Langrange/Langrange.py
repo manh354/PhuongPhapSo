@@ -1,10 +1,11 @@
 # da thuc Langrange co cong thuc la : Tong sigma (0,n) yi/Di  * (w_n+1(x))/(x-xi)
 
+from Interpolation.Langrange.dataSlicingLangrange import sliceInputFromLeftToRight
+from Interpolation.Langrange.dataOutputLangrange import output
 import sys
 sys.path.append('../PhuongPhapSo')
 
 import numpy as np
-
 from Interpolation.tableAndPolynomial import *
 
 def CalculateDiValue(roots: list, position):
@@ -27,7 +28,7 @@ def ConvertLangrangeTableToPoly(table: list):
             poly[j] += table[i][j]
     return poly
 
-def main(dataX, dataY):
+def mainLangrange(dataX, dataY):
     polynomials = []
     length = len(dataX)
     w = CalcWPolynomial(dataX)
@@ -38,4 +39,10 @@ def main(dataX, dataY):
         ithPolynomial = MulPolyWithCoef(ithPolynomial, dataY[i]/Di)
         polynomials.append(ithPolynomial)
     poly = ConvertLangrangeTableToPoly(polynomials)
-    return polynomials, poly
+    return w, polynomials, poly
+
+def wrapperLangrange(dataX, dataY, x):
+    dataX, dataY = sliceInputFromLeftToRight(dataX,dataY)
+    w, all_polynomials, final_polynomial = mainLangrange(dataX,dataY)
+    interpolate_polynomial_value_at_x = CalcPolyReversedInput(final_polynomial,x)
+    output(w,all_polynomials,final_polynomial, x, interpolate_polynomial_value_at_x)

@@ -1,7 +1,8 @@
 import sys
 from Interpolation.tableAndPolynomial import ConvertPolyTableToPoly, CreateChangedPolynomialDegreeByXamount, CreateDifferenceTable, CreateFactorialTable, CreateRootPolySqr, MulPolyWithCoef, MulTwoPoly
 sys.path.append('../PhuongPhapSo')
-
+from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterStirling
+from Interpolation.Center.dataOutputCenter import output
 from Interpolation.tableAndPolynomial import *
 
 # cách chọn chỉ số của Stirling trên bảng sai phân (lẻ số mốc)
@@ -17,7 +18,7 @@ from Interpolation.tableAndPolynomial import *
 #                       -   -
 #===============================
 
-def main(dataX, dataY):
+def mainStirling(dataX, dataY):
     """
     Tạo đa thức Stirling , cần 2n+1 điểm đầu vào
     ---
@@ -27,8 +28,6 @@ def main(dataX, dataY):
     diffTable = CreateDifferenceTable(dataX,dataY)
     facTable = CreateFactorialTable(length)
     middle = int(len(dataX)/2) #khai bao vị trí giữa
-    print("Bảng sai phân:")
-    print(diffTable)
     polyTable = []
     polyTable.append([1])
     if length != 1:
@@ -56,4 +55,14 @@ def main(dataX, dataY):
             # nếu đa thức vị trí i là lẻ thì bị ảnh hưởng bởi 2 hệ số trên bảng sai phân (2 hệ số cộng vào chia đôi)
             polyTable[i] = MulPolyWithCoef(polyTable[i], (diffTable[currentPos,i] + diffTable[currentPos-1,i])/ (2*facTable[i]))
     poly = ConvertPolyTableToPoly(polyTable)
-    return polyTable, poly
+    x0 = dataX[middle]
+    return diffTable,polyTable, poly,x0
+
+def wrapperStirling(dataX, dataY, x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputFromCenterStirling(dataX, dataY)
+    diffTable,polytable, poly, x0 = mainStirling(dataX,dataY)
+    t = (x-x0)/h
+    interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
+    output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
+

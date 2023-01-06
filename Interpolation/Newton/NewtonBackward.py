@@ -1,4 +1,6 @@
 import sys
+from Interpolation.Newton.dataSlicingNewton import sliceInputNewtonBackward
+from Interpolation.Newton.dataOutputNewton import outputAny, outputEqui
 sys.path.append('../PhuongPhapSo')
 
 from Interpolation.tableAndPolynomial import *
@@ -22,7 +24,11 @@ def mainAny(dataX, dataY):
     poly = ConvertPolyTableToPoly(polyTable)
     return polyTable, poly
 
-
+def wrapperNewtonBackwardAny(dataX, dataY, x):
+    dataX, dataY = sliceInputNewtonBackward(dataX,dataY)
+    divtable, polytable, poly = mainAny(dataX,dataY)
+    value = CalcPolyReversedInput(poly,x)
+    outputAny(dataX,dataY,divtable,polytable,poly,x,value)
 
 def mainEqui(dataX, dataY):
     """
@@ -44,3 +50,10 @@ def mainEqui(dataX, dataY):
     return polyTable, poly
 
 
+def wrapperNewtonBackwardEqui(dataX, dataY, x):
+    h = dataX[1] - dataX[0]
+    dataX, dataY = sliceInputNewtonBackward(dataX,dataY)
+    diffTable, polyTable, poly, x0 = mainEqui(dataX,dataY)
+    t = (x-x0)/h
+    value = CalcPolyReversedInput(poly,t)
+    outputEqui(dataX,dataY,diffTable,polyTable,poly,x,value)

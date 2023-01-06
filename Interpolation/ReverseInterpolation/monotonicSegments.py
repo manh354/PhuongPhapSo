@@ -28,16 +28,24 @@ def findMonotonicSegments(dataX, dataY):
             monotonicY = [dataY[i-1],dataY[i]]
     return resultX,resutlY
 
-def chooseSegmentContainPointY(monotonic_segments_list_x : list[list], monotonic_segments_list_y: list[list], point_y):
+def findAllSegmentContainPointY(monotonic_segments_list_x : list[list], monotonic_segments_list_y: list[list], point_y):
+    allSegmentX = []
+    allSegmentY = []
     for i,segment in enumerate(monotonic_segments_list_y):
         if(segment[0] >= point_y and segment[-1] <= point_y):
-            return monotonic_segments_list_x[i], monotonic_segments_list_y[i]
-    return None,None
+            allSegmentX.append (monotonic_segments_list_x[i])
+            allSegmentY.append( monotonic_segments_list_y[i])
+    return allSegmentX,allSegmentY
 
 def findUsableSegmentFromData(dataX,dataY, point_y):
     monotonic_segments_list_x, monotonic_segments_list_y = findMonotonicSegments(dataX, dataY)
-    usable_segment_x, usable_segment_y = chooseSegmentContainPointY(monotonic_segments_list_x, monotonic_segments_list_y, point_y)
-    if(usable_segment_x == None or usable_segment_y == None):
+    usable_segments_x, usable_segments_y = findAllSegmentContainPointY(monotonic_segments_list_x, monotonic_segments_list_y, point_y)
+    if(usable_segments_x == None or usable_segments_y == None):
         return None,None
-    return usable_segment_x,usable_segment_y
+    print("Có các khoảng đơn điệu sau:")
+    for i in range(0,len(usable_segments_x)):
+        print("Dãy {0}: X = {1} ; Y = {2}".format(i, usable_segments_x[i],usable_segments_y[i]))
+    print("Chọn khoảng đơn điệu cần tìm: (ấn số 1,2...)")
+    number = int(input())
+    return usable_segments_x[number],usable_segments_y[number]
 

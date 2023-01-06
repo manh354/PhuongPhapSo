@@ -46,3 +46,4 @@ def wrapperLangrange(dataX, dataY, x):
     w, all_polynomials, final_polynomial = mainLangrange(dataX,dataY)
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(final_polynomial,x)
     output(dataX, dataY,w,all_polynomials,final_polynomial, x, interpolate_polynomial_value_at_x)
+    return final_polynomial

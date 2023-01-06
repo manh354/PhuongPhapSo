@@ -65,4 +65,4 @@ def wrapperStirling(dataX, dataY, x):
     t = (x-x0)/h
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
     output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
-
+    return poly

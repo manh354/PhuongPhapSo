@@ -1,5 +1,5 @@
 from DifferentialEquation.EulerForward import main as EulerForwardMain
-from DifferentialEquation.EulerBackward import main as EulerBackwardMain
+from DifferentialEquation.eulerBackward import main as EulerBackwardMain
 import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt

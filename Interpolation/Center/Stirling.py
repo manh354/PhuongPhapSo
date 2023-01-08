@@ -1,9 +1,11 @@
 import sys
-from Interpolation.tableAndPolynomial import ConvertPolyTableToPoly, CreateChangedPolynomialDegreeByXamount, CreateDifferenceTable, CreateFactorialTable, CreateRootPolySqr, MulPolyWithCoef, MulTwoPoly
 sys.path.append('../PhuongPhapSo')
+from Interpolation.tableAndPolynomial import ConvertPolyTableToPoly, CreateChangedPolynomialDegreeByXamount, CreateDifferenceTable, CreateFactorialTable, CreateRootPolySqr, MulPolyWithCoef, MulTwoPoly
 from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterStirling
 from Interpolation.Center.dataOutputCenter import output
 from Interpolation.tableAndPolynomial import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 # cách chọn chỉ số của Stirling trên bảng sai phân (lẻ số mốc)
 #===============================
@@ -65,4 +67,13 @@ def wrapperStirling(dataX, dataY, x):
     t = (x-x0)/h
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
     output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
-    return poly
+    drawGraph(poly,dataX,dataY,x0,h)
+
+def drawGraph(poly, dataX, dataY,x0,h):
+    max_x = max(dataX)
+    min_x = min(dataX)
+    plt.scatter(dataX,dataY)
+    generate_dataX = np.linspace(min_x,max_x,200)
+    generate_dataY = [CalcPolyReversedInput(poly,(x-x0)/h) for x in generate_dataX]
+    plt.plot(generate_dataX,generate_dataY)
+    plt.show()

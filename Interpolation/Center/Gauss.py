@@ -1,9 +1,9 @@
+import sys
+sys.path.append('../PhuongPhapSo')
 from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterGauss1, sliceInputFromCenterGauss2
 from Interpolation.Center.dataOutputCenter import output
-import sys
 import matplotlib.pyplot as plt
 import numpy as np
-sys.path.append('../PhuongPhapSo')
 
 from Interpolation.tableAndPolynomial import *
 
@@ -46,7 +46,6 @@ def wrapperGauss1(dataX, dataY,x):
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
     output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
     drawGraph(poly,dataX,dataY,x0,h)
-    return poly
 
 
 # cách chọn chỉ số của gauss2 trên bảng sai phân
@@ -87,7 +86,6 @@ def wrapperGauss2(dataX, dataY,x):
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
     output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
     drawGraph(poly,dataX,dataY,x0,h)
-    return poly
 
 def drawGraph(poly, dataX, dataY,x0,h):
     max_x = max(dataX)

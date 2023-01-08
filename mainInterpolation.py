@@ -133,7 +133,7 @@ def main():
             print("Tương ứng với mốc này, có đoạn đơn điệu sau:")
             print("X: {0}".format(dataX))
             print("Y: {0}".format(dataY))
-            _, _,polyTable,poly = noiSuyNguoc(dataX, dataY, value)
+            noiSuyNguoc(dataX, dataY, value)
 
 
         if noiSuyNguoc == ReverseNewtonForwardMain:

@@ -1,24 +1,35 @@
-from DifferentialEquation.EulerForward import main as EulerForwardMain
-from DifferentialEquation.eulerBackward import main as EulerBackwardMain
+from DifferentialEquation.eulerForward import mainEulerForward
+from DifferentialEquation.eulerBackward import mainEulerBackward
+from DifferentialEquation.rectangular import mainRectangular
 import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
 
-variables = n,p = list(sp.symbols("n p"))
+variables = list(sp.symbols("n p"))
 t = sp.symbols('t')
 
-deriv_equations = ["0.5*n*(1.0-n/200)-0.35*n*p","-0.2*p+0.35*n*p"]
+deriv_equations = ["e**cos(t)*sin(2*t)","e**sin(t)*cos(t)+1/2"]
 
-vars_start = [2,2]
+vars_start = [0,0]
 t_start = 0
 
-h = 0.1
+h = 0.5
 
-list_result_t , list_result_var = EulerBackwardMain(deriv_equations,variables,t,vars_start,t_start,2000,h)
-ax = plt.figure().add_subplot(2,2)
-
-ax.plot(*np.array(list_result_var).T, lw = 0.5)
-plt.show()
-
-def main():
+def main(func):
+    list_result_t , list_result_var = func(deriv_equations,variables,t,vars_start,t_start,10*np.pi,h)
+    array_of_result = np.array(list_result_var).T
+    variables_count = len(variables)
+    fig, ax = plt.subplots(1,variables_count+1)
+    fig.set_size_inches(6*(variables_count+1),6)
+    ax[0].plot(*array_of_result, lw = 0.5)
+    for i in range(1,variables_count+1) :
+        ax[i].plot(list_result_t,array_of_result[i-1])
     return
+
+def test():
+    main(mainEulerForward)
+    main(mainEulerBackward)
+    main(mainRectangular)
+    plt.show()
+
+test()

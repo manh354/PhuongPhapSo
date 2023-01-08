@@ -5,6 +5,7 @@ from Interpolation.Langrange.dataOutputLangrange import output
 import sys
 sys.path.append('../PhuongPhapSo')
 
+import matplotlib.pyplot as plt
 import numpy as np
 from Interpolation.tableAndPolynomial import *
 
@@ -46,4 +47,13 @@ def wrapperLangrange(dataX, dataY, x):
     w, all_polynomials, final_polynomial = mainLangrange(dataX,dataY)
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(final_polynomial,x)
     output(dataX, dataY,w,all_polynomials,final_polynomial, x, interpolate_polynomial_value_at_x)
-    return final_polynomial
+    drawGraph(final_polynomial, dataX,dataY)
+
+def drawGraph(poly,dataX, dataY):
+    max_x = max(dataX)
+    min_x = min(dataX)
+    plt.scatter(dataX,dataY)
+    generate_dataX = np.linspace(min_x,max_x,200)
+    generate_dataY = [CalcPolyReversedInput(poly,x) for x in generate_dataX]
+    plt.plot(generate_dataX,generate_dataY)
+    plt.show()

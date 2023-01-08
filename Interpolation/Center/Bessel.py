@@ -1,8 +1,9 @@
 import sys
+sys.path.append('../PhuongPhapSo')
 from Interpolation.Center.dataSlicingCenter import sliceInputFromCenterBessel
 from Interpolation.Center.dataOutputCenter import output
-sys.path.append('../PhuongPhapSo')
-
+import matplotlib.pyplot as plt
+import numpy as np
 from Interpolation.tableAndPolynomial import *
 
 # cách chọn chỉ số của Bessel trên bảng sai phân (chẵn số mốc)
@@ -66,6 +67,7 @@ def wrapperBesselNorm(dataX, dataY,x):
     t = (x-x0)/h
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
     output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
+    drawGraph(poly,dataX,dataY,x0,h)
 
 def mainBesselSkewed(dataX, dataY):
     """
@@ -113,5 +115,13 @@ def wrapperBesselSkewed(dataX, dataY,x):
     t = (x-x0)/h 
     interpolate_polynomial_value_at_x = CalcPolyReversedInput(poly,t)
     output(dataX,dataY,diffTable,polytable,poly,x,t,interpolate_polynomial_value_at_x)
-    return poly
+    drawGraph(poly,dataX,dataY,x0,h)
 
+def drawGraph(poly, dataX, dataY,x0,h):
+    max_x = max(dataX)
+    min_x = min(dataX)
+    plt.scatter(dataX,dataY)
+    generate_dataX = np.linspace(min_x,max_x,200)
+    generate_dataY = [CalcPolyReversedInput(poly,(x-x0)/h) for x in generate_dataX]
+    plt.plot(generate_dataX,generate_dataY)
+    plt.show()

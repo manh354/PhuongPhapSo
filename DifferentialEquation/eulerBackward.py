@@ -9,8 +9,7 @@ def mainEulerBackward(symbolic_equation_system : list, symbolic_vars : list[sp.S
     t_iterate = t_start
     i = 0
     while t_iterate <= t_end:
-        equation_system_values = fixedpointIteration(lamdified_equation_system,vars_start, t_iterate,h, 1e-5, 100) # var = var + h * d(var)/dt 
-        vars_iterate = np.add(vars_iterate, np.multiply(h,equation_system_values)) # var = var + h * d(var)/dt 
+        vars_iterate = fixedpointIteration(lamdified_equation_system,vars_iterate, t_iterate,h, 1e-5, 100) # var = var + h * d(var)/dt 
         t_iterate = t_iterate + h
         list_result_t.append(t_iterate)
         list_result_vars.append(vars_iterate)
@@ -24,8 +23,8 @@ def fixedpointIteration(lamdified_equation_system ,vars_start : list, t_start, h
     vars_iterate_new = np.add(vars_iterate,np.multiply(h, equation_system_value))
     i = 1
     while (np.sum(np.abs(np.subtract(vars_iterate_new, vars_iterate))) >= epsilon) and (i < terminate_threshold):
-        equation_system_value = [equation((vars_iterate),t_iterate) for equation in lamdified_equation_system]
-        vars_iterate_new = np.add(vars_iterate,np.multiply(h, equation_system_value))
         vars_iterate = vars_iterate_new.copy()
+        equation_system_value = [equation((vars_iterate),t_iterate) for equation in lamdified_equation_system]
+        vars_iterate_new = np.add(vars_start,np.multiply(h, equation_system_value))
         i += 1
     return vars_iterate_new

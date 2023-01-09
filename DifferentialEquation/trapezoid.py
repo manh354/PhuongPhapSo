@@ -1,7 +1,7 @@
 import numpy as np
 import sympy as sp
 
-def mainRectangular(symbolic_equation_system : list, symbolic_vars : list[sp.Symbol], symbolic_t : sp.Symbol , vars_start: list[float], t_start: float, t_end: float,h : float):
+def mainTrapezoid(symbolic_equation_system : list, symbolic_vars : list[sp.Symbol], symbolic_t : sp.Symbol , vars_start: list[float], t_start: float, t_end: float,h : float):
     list_result_t = []
     list_result_vars = []
     lamdified_equation_system = [sp.lambdify([[*symbolic_vars],symbolic_t],func) for func in symbolic_equation_system]

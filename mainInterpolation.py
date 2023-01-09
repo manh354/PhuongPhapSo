@@ -1,7 +1,6 @@
 from Interpolation.InputProcess.InputInterface import main as InputMain
 from Interpolation.InputProcess.SliceData import SliceFromTo, AutoSlice, AutoFindSlice, SliceByHand
 from Interpolation.valuesConvert import*
-from findX0Mode import*
 
 from Interpolation.Langrange.langrange import wrapperLangrange as LangrangeMain
 from Interpolation.Newton.newtonForward import wrapperNewtonForwardAny as NewtonForwardAnyMain
@@ -18,7 +17,6 @@ from Interpolation.ReverseInterpolation.reverseLangrange import mainReverseLangr
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonForwardReverse as ReverseNewtonForwardMain
 from Interpolation.ReverseInterpolation.reverseNewton import mainNewtonBackwardReverse as ReverseNewtonBackwardMain
 from Interpolation.ReverseInterpolation.monotonicSegments import findUsableSegmentFromData as FindUsableSegment
-from Interpolation.tableAndPolynomial import CalcPolyReversedInput
 
 import matplotlib.pyplot as plt
 import numpy as np

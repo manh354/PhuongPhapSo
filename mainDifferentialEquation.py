@@ -54,13 +54,25 @@ def mainTest2D(func):
     return
 
 def test():
-    
+    print("Euler hiện: ")
+    print("=============================================================================")
     mainTest2D(mainEulerForward)
+    plt.show()
+    print("Euler ẩn: ")
+    print("=============================================================================")
     mainTest2D(mainEulerBackward)
+    plt.show()
+    print("Thang ẩn: ")
+    print("=============================================================================")
     mainTest2D(mainTrapezoid)
+    plt.show()
+    print("RK3 Heun: ")
+    print("=============================================================================")
     mainTest2D(mainRungaKutta3_Heun)
+    plt.show()
+    print("RK4 Cổ điển: ")
+    print("=============================================================================")
     mainTest2D(mainRungeKutta4_Classic)
-    
     plt.show()
 
 def solve():

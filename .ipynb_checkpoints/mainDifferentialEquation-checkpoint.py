@@ -1,22 +1,20 @@
 from DifferentialEquation.eulerForward import mainEulerForward
 from DifferentialEquation.eulerBackward import mainEulerBackward
 from DifferentialEquation.trapezoid import mainTrapezoid
-from DifferentialEquation.rungeKutta import mainRungeKutta4_Classic, mainRungaKutta3_Heun, mainRungaKutta3_Kutta
+from DifferentialEquation.rungeKutta import mainRungeKutta4_Classic, mainRungaKutta3_Heun
 import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
 
-variables = list(sp.symbols("x y z"))
+variables = list(sp.symbols("x y"))
 t = sp.symbols('t')
 
-deriv_equations = ["10*(y-x)","x*(28-z)-y","x*y-8/3*z"]
-groundtruth_equations=["None","None"]
-vars_start = [0.05,1.0,1.05]
+deriv_equations = ["cos(2*t)**2*x","sin(t)**2*y"]
+groundtruth_equations=["e**((sin(4*t)+4*t)/8)","e**(t/2-sin(2*t)/4)"]
+vars_start = [1,1]
 t_start = 0
-t_end = 50
-h = 0.01
-test = False
-
+t_end = 5
+h = 0.5
 
 def main2D(func):
 
@@ -31,8 +29,9 @@ def main2D(func):
     return
 
 def mainTest2D(func):
+
     lamdified_equation_system = [sp.lambdify(t,func) for func in groundtruth_equations]
-    groundtruth_t = np.linspace(t_start,t_end+h,1000)
+    groundtruth_t = np.linspace(t_start,t_end,1000)
     groundtruth_var = [[lamdified_equation(t) for t in groundtruth_t] for lamdified_equation in lamdified_equation_system]
 
     list_result_t , list_result_var = func(deriv_equations,variables,t,vars_start,t_start,t_end,h)
@@ -54,22 +53,6 @@ def mainTest2D(func):
         ax[0,i].plot(groundtruth_t,groundtruth_var[i-1])
     return
 
-def main3D(func):
-    list_result_t , list_result_var = func(deriv_equations,variables,t,vars_start,t_start,t_end,h)
-    array_of_result = np.array(list_result_var).T
-    variables_count = len(variables)
-    fig = plt.figure()
-    ax = fig.add_subplot(1,4,1,projection = "3d")
-    X = array_of_result[0]
-    Y = array_of_result[1]
-    Z = array_of_result[2]
-    fig.set_size_inches(6*(variables_count+1),6)
-    ax.plot(*array_of_result, lw = 0.5)
-    for i in range(1,variables_count+1) :
-        ax = fig.add_subplot(1,4,i+1)
-        ax.plot(list_result_t,array_of_result[i-1])
-    return
-
 def test():
     print("Euler hiện: ")
     print("=============================================================================")
@@ -87,38 +70,17 @@ def test():
     print("=============================================================================")
     mainTest2D(mainRungaKutta3_Heun)
     plt.show()
-    print("RK3 Kutta: ")
-    print("=============================================================================")
-    mainTest2D(mainRungaKutta3_Kutta)
-    plt.show()
     print("RK4 Cổ điển: ")
     print("=============================================================================")
     mainTest2D(mainRungeKutta4_Classic)
     plt.show()
 
-
 def solve():
-    typeOfGraph = chooseFunc()
-    if(typeOfGraph == '3d'):
-        main3D(mainEulerForward)
-        main3D(mainEulerBackward)
-        main3D(mainTrapezoid)
-        main3D(mainRungaKutta3_Heun)
-        main3D(mainRungaKutta3_Kutta)
-        main3D(mainRungeKutta4_Classic)
-    if(typeOfGraph == '2d'):
-        main2D(mainEulerForward)
-        main2D(mainEulerBackward)
-        main2D(mainTrapezoid)
-        main2D(mainRungaKutta3_Heun)
-        main2D(mainRungaKutta3_Kutta)
-        main2D(mainRungeKutta4_Classic)
+    main2D(mainEulerForward)
+    main2D(mainEulerBackward)
+    main2D(mainTrapezoid)
+    main2D(mainRungaKutta3_Heun)
+    main2D(mainRungeKutta4_Classic)
     plt.show()
 
-def chooseFunc():
-    if(len(variables) ==3):
-        return "3d"
-    else:
-        return "2d"
-
-solve()
+test()

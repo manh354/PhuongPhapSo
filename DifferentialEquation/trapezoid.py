@@ -7,9 +7,10 @@ def mainTrapezoid(symbolic_equation_system : list, symbolic_vars : list[sp.Symbo
     lamdified_equation_system = [sp.lambdify([[*symbolic_vars],symbolic_t],func) for func in symbolic_equation_system]
     vars_iterate = vars_start.copy()
     t_iterate = t_start
-    i = 0
-    while t_iterate <= t_end:
-        vars_iterate = fixedpointIteration(lamdified_equation_system,vars_iterate, t_iterate,h, 1e-5, 100)
+    list_result_t.append(t_iterate)
+    list_result_vars.append(vars_iterate)
+    while t_iterate < t_end:
+        vars_iterate = fixedpointIteration(lamdified_equation_system,vars_iterate, t_iterate,h, 1e-9, 100)
         t_iterate = t_iterate + h
         list_result_t.append(t_iterate)
         list_result_vars.append(vars_iterate)

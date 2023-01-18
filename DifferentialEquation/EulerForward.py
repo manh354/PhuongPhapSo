@@ -11,7 +11,9 @@ def mainEulerForward(symbolic_function_system : list, symbolic_vars : list[sp.Sy
     lamdified_equation_system = [sp.lambdify([[*symbolic_vars],symbolic_t],func) for func in symbolic_function_system]
     vars_iterate = vars_start.copy()
     t_iterate = t_start
-    while t_iterate <= t_end:
+    list_result_t.append(t_iterate)
+    list_result_vars.append(vars_iterate)
+    while t_iterate < t_end:
         equation_system_values = [equation((vars_iterate),t_iterate) for equation in lamdified_equation_system]
         vars_iterate = np.add(vars_iterate, np.multiply(h,equation_system_values)) # var = var + h * d(var)/dt 
         t_iterate = t_iterate + h

@@ -6,16 +6,16 @@ import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
 
-variables = list(sp.symbols("x y z"))
 t = sp.symbols('t')
 
-deriv_equations = ["10*(y-x)","x*(28-z)-y","x*y-8/3*z"]
-groundtruth_equations=["None","None"]
-vars_start = [0.05,1.0,1.05]
-t_start = 0
-t_end = 50
-h = 0.01
-test = False
+variables = sp.symbols("n p")
+deriv_equations = ["0.5*n*(1.0-n/200) - 0.35*n*p","-0.2*p + 0.35*n*p"]
+groundtruth_equations = ["None","None"]
+vars_start = [15,7]
+t_start = 1
+t_end = 500
+h = 0.1
+Test = False
 
 
 def main2D(func):
@@ -100,20 +100,55 @@ def test():
 def solve():
     typeOfGraph = chooseFunc()
     if(typeOfGraph == '3d'):
+        print("Euler hiện: ")
+        print("=============================================================================")
         main3D(mainEulerForward)
+        plt.show()
+        print("Euler ẩn: ")
+        print("=============================================================================")
         main3D(mainEulerBackward)
+        plt.show()
+        print("Thang ẩn: ")
+        print("=============================================================================")
         main3D(mainTrapezoid)
+        plt.show()
+        print("RK3 Heun: ")
+        print("=============================================================================")
         main3D(mainRungaKutta3_Heun)
+        plt.show()
+        print("RK3 Kutta: ")
+        print("=============================================================================")
         main3D(mainRungaKutta3_Kutta)
+        plt.show()
+        print("RK4 Cổ điển: ")
+        print("=============================================================================")
         main3D(mainRungeKutta4_Classic)
+        plt.show()
     if(typeOfGraph == '2d'):
+        print("Euler hiện: ")
+        print("=============================================================================")
         main2D(mainEulerForward)
+        plt.show()
+        print("Euler ẩn: ")
+        print("=============================================================================")
         main2D(mainEulerBackward)
+        plt.show()
+        print("Thang ẩn: ")
+        print("=============================================================================")
         main2D(mainTrapezoid)
+        plt.show()
+        print("RK3 Heun: ")
+        print("=============================================================================")
         main2D(mainRungaKutta3_Heun)
+        plt.show()
+        print("RK3 Kutta: ")
+        print("=============================================================================")
         main2D(mainRungaKutta3_Kutta)
+        plt.show()
+        print("RK4 Cổ điển: ")
+        print("=============================================================================")
         main2D(mainRungeKutta4_Classic)
-    plt.show()
+        plt.show()
 
 def chooseFunc():
     if(len(variables) ==3):
@@ -121,4 +156,7 @@ def chooseFunc():
     else:
         return "2d"
 
-solve()
+if(Test):
+    test()
+else:
+    solve()

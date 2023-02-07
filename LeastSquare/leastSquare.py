@@ -6,12 +6,11 @@ import matplotlib.pyplot as plt
 #dataX=np.array([0.038,0.194,0.425,0.626,1.253,2.500,3.740])
 #dataY=np.array([0.050,0.127,0.094,0.2122,0.2729,0.2665,0.3317])
 
-
-adjustable_parameters = sp.symbols("a b c d")
+adjustable_parameters = sp.symbols("a b c")
 independent_variable = sp.Symbol("x")
-test_function = "5*cos(4*x) + 0.05*x*log(x) + 2"
-fitting_function = "a*cos(4*x) + b*x*log(c*x) + d"
-param_start = [5,0.05,1,2]
+test_function = "5*cos(x) + 0.5*x + 2"
+fitting_function = "a*cos(x) + b*x + c"
+param_start = [1,0,0]
 
 test_function = sp.lambdify(independent_variable,test_function)
 partial_derivatives = [str(sp.diff(fitting_function, param)) for param in adjustable_parameters]
